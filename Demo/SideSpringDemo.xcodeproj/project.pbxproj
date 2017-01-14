@@ -1,0 +1,330 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		10BB21851E2AA239003AC0DA /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 10BB21841E2AA239003AC0DA /* AppDelegate.swift */; };
+		10BB21871E2AA239003AC0DA /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 10BB21861E2AA239003AC0DA /* ViewController.swift */; };
+		10BB218A1E2AA239003AC0DA /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 10BB21881E2AA239003AC0DA /* Main.storyboard */; };
+		10BB218C1E2AA239003AC0DA /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 10BB218B1E2AA239003AC0DA /* Assets.xcassets */; };
+		10BB218F1E2AA239003AC0DA /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 10BB218D1E2AA239003AC0DA /* LaunchScreen.storyboard */; };
+		10BB21981E2AA254003AC0DA /* SideSpringTransitionVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 10BB21961E2AA254003AC0DA /* SideSpringTransitionVC.swift */; };
+		10BB21991E2AA254003AC0DA /* SideSpringTransition.swift in Sources */ = {isa = PBXBuildFile; fileRef = 10BB21971E2AA254003AC0DA /* SideSpringTransition.swift */; };
+		10BB219D1E2AA535003AC0DA /* SideSpringTransitionHomeVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 10BB219C1E2AA535003AC0DA /* SideSpringTransitionHomeVC.swift */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXFileReference section */
+		10BB21811E2AA239003AC0DA /* SideSpringDemo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SideSpringDemo.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		10BB21841E2AA239003AC0DA /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
+		10BB21861E2AA239003AC0DA /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
+		10BB21891E2AA239003AC0DA /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
+		10BB218B1E2AA239003AC0DA /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		10BB218E1E2AA239003AC0DA /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
+		10BB21901E2AA239003AC0DA /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		10BB21961E2AA254003AC0DA /* SideSpringTransitionVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SideSpringTransitionVC.swift; sourceTree = "<group>"; };
+		10BB21971E2AA254003AC0DA /* SideSpringTransition.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SideSpringTransition.swift; sourceTree = "<group>"; };
+		10BB219C1E2AA535003AC0DA /* SideSpringTransitionHomeVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SideSpringTransitionHomeVC.swift; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		10BB217E1E2AA239003AC0DA /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		10BB21781E2AA239003AC0DA = {
+			isa = PBXGroup;
+			children = (
+				10BB21831E2AA239003AC0DA /* SideSpringDemo */,
+				10BB21821E2AA239003AC0DA /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		10BB21821E2AA239003AC0DA /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				10BB21811E2AA239003AC0DA /* SideSpringDemo.app */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		10BB21831E2AA239003AC0DA /* SideSpringDemo */ = {
+			isa = PBXGroup;
+			children = (
+				10BB219E1E2AA5DE003AC0DA /* SideSpring */,
+				10BB21841E2AA239003AC0DA /* AppDelegate.swift */,
+				10BB21861E2AA239003AC0DA /* ViewController.swift */,
+				10BB21881E2AA239003AC0DA /* Main.storyboard */,
+				10BB218B1E2AA239003AC0DA /* Assets.xcassets */,
+				10BB218D1E2AA239003AC0DA /* LaunchScreen.storyboard */,
+				10BB21901E2AA239003AC0DA /* Info.plist */,
+			);
+			path = SideSpringDemo;
+			sourceTree = "<group>";
+		};
+		10BB219E1E2AA5DE003AC0DA /* SideSpring */ = {
+			isa = PBXGroup;
+			children = (
+				10BB21961E2AA254003AC0DA /* SideSpringTransitionVC.swift */,
+				10BB219C1E2AA535003AC0DA /* SideSpringTransitionHomeVC.swift */,
+				10BB21971E2AA254003AC0DA /* SideSpringTransition.swift */,
+			);
+			name = SideSpring;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		10BB21801E2AA239003AC0DA /* SideSpringDemo */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 10BB21931E2AA239003AC0DA /* Build configuration list for PBXNativeTarget "SideSpringDemo" */;
+			buildPhases = (
+				10BB217D1E2AA239003AC0DA /* Sources */,
+				10BB217E1E2AA239003AC0DA /* Frameworks */,
+				10BB217F1E2AA239003AC0DA /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = SideSpringDemo;
+			productName = SideSpringDemo;
+			productReference = 10BB21811E2AA239003AC0DA /* SideSpringDemo.app */;
+			productType = "com.apple.product-type.application";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		10BB21791E2AA239003AC0DA /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastSwiftUpdateCheck = 0820;
+				LastUpgradeCheck = 0820;
+				ORGANIZATIONNAME = "Michael Schloss";
+				TargetAttributes = {
+					10BB21801E2AA239003AC0DA = {
+						CreatedOnToolsVersion = 8.2.1;
+						DevelopmentTeam = 7SSRC7UGJ6;
+						ProvisioningStyle = Automatic;
+					};
+				};
+			};
+			buildConfigurationList = 10BB217C1E2AA239003AC0DA /* Build configuration list for PBXProject "SideSpringDemo" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = 10BB21781E2AA239003AC0DA;
+			productRefGroup = 10BB21821E2AA239003AC0DA /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				10BB21801E2AA239003AC0DA /* SideSpringDemo */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		10BB217F1E2AA239003AC0DA /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				10BB218F1E2AA239003AC0DA /* LaunchScreen.storyboard in Resources */,
+				10BB218C1E2AA239003AC0DA /* Assets.xcassets in Resources */,
+				10BB218A1E2AA239003AC0DA /* Main.storyboard in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		10BB217D1E2AA239003AC0DA /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				10BB21991E2AA254003AC0DA /* SideSpringTransition.swift in Sources */,
+				10BB21871E2AA239003AC0DA /* ViewController.swift in Sources */,
+				10BB219D1E2AA535003AC0DA /* SideSpringTransitionHomeVC.swift in Sources */,
+				10BB21851E2AA239003AC0DA /* AppDelegate.swift in Sources */,
+				10BB21981E2AA254003AC0DA /* SideSpringTransitionVC.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXVariantGroup section */
+		10BB21881E2AA239003AC0DA /* Main.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				10BB21891E2AA239003AC0DA /* Base */,
+			);
+			name = Main.storyboard;
+			sourceTree = "<group>";
+		};
+		10BB218D1E2AA239003AC0DA /* LaunchScreen.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				10BB218E1E2AA239003AC0DA /* Base */,
+			);
+			name = LaunchScreen.storyboard;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		10BB21911E2AA239003AC0DA /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.2;
+				MTL_ENABLE_DEBUG_INFO = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		10BB21921E2AA239003AC0DA /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.2;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				SDKROOT = iphoneos;
+				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		10BB21941E2AA239003AC0DA /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				DEVELOPMENT_TEAM = 7SSRC7UGJ6;
+				INFOPLIST_FILE = SideSpringDemo/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = com.michaelschloss.SideSpringDemo;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 3.0;
+			};
+			name = Debug;
+		};
+		10BB21951E2AA239003AC0DA /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				DEVELOPMENT_TEAM = 7SSRC7UGJ6;
+				INFOPLIST_FILE = SideSpringDemo/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = com.michaelschloss.SideSpringDemo;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 3.0;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		10BB217C1E2AA239003AC0DA /* Build configuration list for PBXProject "SideSpringDemo" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				10BB21911E2AA239003AC0DA /* Debug */,
+				10BB21921E2AA239003AC0DA /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		10BB21931E2AA239003AC0DA /* Build configuration list for PBXNativeTarget "SideSpringDemo" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				10BB21941E2AA239003AC0DA /* Debug */,
+				10BB21951E2AA239003AC0DA /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 10BB21791E2AA239003AC0DA /* Project object */;
+}
