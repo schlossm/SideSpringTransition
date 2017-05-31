@@ -27,6 +27,8 @@ class ForwardSideSpringTransition: NSObject, UIViewControllerAnimatedTransitioni
         
         let containerView = transitionContext.containerView
         
+        fromVC.viewWillDisappear(true)
+        
         containerView.addSubview(fromVC.view)
         containerView.addSubview(toVC.view)
         fromVC.view.frame   = transitionContext.finalFrame(for: fromVC)
@@ -47,6 +49,7 @@ class ForwardSideSpringTransition: NSObject, UIViewControllerAnimatedTransitioni
             UIApplication.shared.keyWindow!.addSubview(toVC.view)
             fromVC.view.transform = CGAffineTransform.identity
             transitionContext.completeTransition(true)
+            fromVC.viewDidDisappear(true)
         }
         
         (toVC as? SideSpringTransitionDisplay)?.performLastMinuteDisplay?()
@@ -100,7 +103,7 @@ class TransitionDriver : NSObject
     var transitionContext : UIViewControllerContextTransitioning
     var transitionAnimator: UIViewPropertyAnimator!
     
-    fileprivate var currentVelocity : CGFloat!
+    fileprivate var currentVelocity : CGFloat = 0.0
     
     init(context: UIViewControllerContextTransitioning, panGestureRecognizer: UIScreenEdgePanGestureRecognizer)
     {
@@ -132,6 +135,10 @@ class TransitionDriver : NSObject
             
             UIApplication.shared.keyWindow!.addSubview(toVC.view)
             fromVC.view.removeFromSuperview()
+            
+            toVC.viewDidAppear(true)
+            fromVC.viewDidDisappear(true)
+            
             self.transitionContext.completeTransition(true)
         }
         
@@ -145,6 +152,9 @@ class TransitionDriver : NSObject
         toVC.view.frame     = transitionContext.finalFrame(for: toVC)
         toVC.view.transform = CGAffineTransform(translationX: -toVC.view.frame.size.width, y: 0.0)
         containerView.layoutIfNeeded()
+        
+        fromVC.viewWillDisappear(true)
+        toVC.viewWillAppear(true)
     }
     
     func myAnimateTransition(_ transitionContext: UIViewControllerContextTransitioning)
@@ -170,7 +180,7 @@ class TransitionDriver : NSObject
              
              fromGesture.setTranslation(CGPoint.zero, in: transitionContext.containerView)
             
-        case .ended, .cancelled:
+        case .ended, .cancelled, .failed:
             endInteraction()
             
         default:
