@@ -25,7 +25,7 @@ class SideSpringTransitionVC: UIViewController, threeDTouchDelegate
         }
     }
     
-    func dismiss(edgePan: UIScreenEdgePanGestureRecognizer)
+    @objc func dismiss(edgePan: UIScreenEdgePanGestureRecognizer)
     {
         switch edgePan.state
         {

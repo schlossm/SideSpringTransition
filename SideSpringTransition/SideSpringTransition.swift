@@ -166,7 +166,7 @@ class TransitionDriver : NSObject
         toVC.view.transform     = CGAffineTransform.identity
     }
     
-    func updateInteraction(_ fromGesture: UIScreenEdgePanGestureRecognizer)
+    @objc func updateInteraction(_ fromGesture: UIScreenEdgePanGestureRecognizer)
     {
         switch fromGesture.state
         {
