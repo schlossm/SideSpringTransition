@@ -7,36 +7,32 @@
 //
 
 import UIKit
+import SideSpringTransition
 
-class ViewController: SideSpringTransitionHomeVC
+class ViewController: SideSpringTransitionInitialVC
 {
     @IBOutlet var nextButton: UIButton!
     
     override func viewDidAppear(_ animated: Bool)
     {
         super.viewDidAppear(animated)
-        
-        threeDTouchViews.append(registerForPreviewing(with: self, sourceView: nextButton))
+        forceTouchRegisters.append(registerForPreviewing(with: self, sourceView: nextButton))
     }
 
     @IBAction func next()
     {
+        present(secondVC, animated: true, completion: nil)
+    }
+    
+    fileprivate var secondVC: UIViewController {
         let nextVC = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "second")
         nextVC.transitioningDelegate = self
         nextVC.modalPresentationStyle = .custom
-        present(nextVC, animated: true, completion: nil)
+        return nextVC
     }
     
     override func previewingContext(_ previewingContext: UIViewControllerPreviewing, viewControllerForLocation location: CGPoint) -> UIViewController?
     {
-        if previewingContext.sourceView == nextButton
-        {
-            let nextVC = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "second")
-            nextVC.transitioningDelegate = self
-            nextVC.modalPresentationStyle = .custom
-            return nextVC
-        }
-        return nil
+        return previewingContext.sourceView == nextButton ? secondVC : nil
     }
 }
-
