@@ -65,6 +65,7 @@ class ForwardSideSpringTransition: NSObject, UIViewControllerAnimatedTransitioni
             UIApplication.shared.keyWindow?.addSubview(toVC.view)
             fromVC.view.transform = .identity
             transitionContext.completeTransition(true)
+            fromVC.view.removeFromSuperview()
             fromVC.viewDidDisappear(true)
         }
         
@@ -174,6 +175,9 @@ class TransitionDriver
             toVC.view.transform = .identity
             fromVC.view.transform = .identity
             transitionContext.completeTransition(false)
+            
+            UIApplication.shared.keyWindow!.addSubview(fromVC.view)
+            toVC.view.removeFromSuperview()
             return
         }
         
