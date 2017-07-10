@@ -110,6 +110,11 @@ extension SideSpringTransition : UIViewControllerInteractiveTransitioning
         }
     }
     
+    public func animationEnded(_ transitionCompleted: Bool)
+    {
+        transitionDriver = nil
+    }
+    
     public var wantsInteractiveStart: Bool
     {
         return willBeginInteractively
@@ -120,7 +125,7 @@ class TransitionDriver
 {
     var transitionAnimator: UIViewPropertyAnimator
     
-    fileprivate var transitionContext : UIViewControllerContextTransitioning
+    fileprivate var transitionContext : UIViewControllerContextTransitioning!
     fileprivate var currentVelocity : CGFloat = 0.0
     
     init?(context: UIViewControllerContextTransitioning, panGestureRecognizer: UIScreenEdgePanGestureRecognizer)
@@ -142,15 +147,14 @@ class TransitionDriver
             self.transitionAnimationCompleted(position: position)
         }
         
-        let containerView = transitionContext.containerView
+        let containerView = context.containerView
         containerView.insertSubview(toVC.view, belowSubview: fromVC.view)
         
-        fromVC.view.frame = transitionContext.finalFrame(for: fromVC)
-        toVC.view.frame = transitionContext.finalFrame(for: toVC)
+        fromVC.view.frame = context.finalFrame(for: fromVC)
+        toVC.view.frame = context.finalFrame(for: toVC)
         toVC.view.transform = CGAffineTransform(translationX: -toVC.view.frame.width, y: 0.0)
         containerView.layoutIfNeeded()
         
-        fromVC.viewWillDisappear(true)
         toVC.viewWillAppear(true)
         
         panGestureRecognizer.addTarget(self, action: #selector(updateInteraction(_:)))
@@ -183,11 +187,12 @@ class TransitionDriver
         
         UIApplication.shared.keyWindow!.addSubview(toVC.view)
         fromVC.view.removeFromSuperview()
-        
+            
         toVC.viewDidAppear(true)
         fromVC.viewDidDisappear(true)
         
         transitionContext.completeTransition(true)
+        transitionContext = nil
     }
     
     @objc func updateInteraction(_ fromGesture: UIScreenEdgePanGestureRecognizer)

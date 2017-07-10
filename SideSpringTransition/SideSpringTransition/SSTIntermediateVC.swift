@@ -28,6 +28,7 @@ open class SideSpringTransitionIntermediateVC: SideSpringTransitionInitialVC, Fo
     
     @IBAction func dismiss()
     {
+        UIImpactFeedbackGenerator(style: .light).impactOccurred()
         dismissAnimationController?.willBeginInteractively = false
         dismiss(animated: true, completion: nil)
     }

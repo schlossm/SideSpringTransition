@@ -4,8 +4,9 @@
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
+        <deployment identifier="iOS"/>
+        <development version="8000" identifier="xcode"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13104.16"/>
-        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
@@ -13,6 +14,10 @@
         <scene sceneID="tne-QT-ifu">
             <objects>
                 <viewController storyboardIdentifier="first" id="BYZ-38-t0r" customClass="ViewController" customModule="SideSpringDemo" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="P6x-O4-avx"/>
+                        <viewControllerLayoutGuide type="bottom" id="7hC-lc-UUn"/>
+                    </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="8bC-Xf-vdC">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -34,11 +39,10 @@
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
                             <constraint firstItem="9Lv-Yd-fRp" firstAttribute="centerY" secondItem="8bC-Xf-vdC" secondAttribute="centerY" id="4wV-Ua-oka"/>
-                            <constraint firstItem="9Lv-Yd-fRp" firstAttribute="centerX" secondItem="7tl-fW-h0y" secondAttribute="centerX" id="74v-Z2-5o2"/>
+                            <constraint firstItem="9Lv-Yd-fRp" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="74v-Z2-5o2"/>
                             <constraint firstItem="7Jw-t3-WLX" firstAttribute="top" secondItem="9Lv-Yd-fRp" secondAttribute="bottom" constant="16" id="B8s-mE-ihG"/>
                             <constraint firstItem="7Jw-t3-WLX" firstAttribute="centerX" secondItem="9Lv-Yd-fRp" secondAttribute="centerX" id="oiG-59-gs9"/>
                         </constraints>
-                        <viewLayoutGuide key="safeArea" id="7tl-fW-h0y"/>
                     </view>
                     <connections>
                         <outlet property="nextButton" destination="7Jw-t3-WLX" id="Tos-d9-i4R"/>
@@ -52,6 +56,10 @@
         <scene sceneID="hG1-fD-xHN">
             <objects>
                 <viewController storyboardIdentifier="second" id="zXi-1q-NGy" customClass="SideSpringTransitionFinalVC" customModule="SideSpringTransition" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="lzH-z5-XQd"/>
+                        <viewControllerLayoutGuide type="bottom" id="JhQ-C3-6r4"/>
+                    </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="iHS-aE-a8F">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -73,11 +81,10 @@
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
                             <constraint firstItem="KG2-EX-pi4" firstAttribute="centerX" secondItem="9nH-is-qzW" secondAttribute="centerX" id="38o-OW-xIC"/>
-                            <constraint firstItem="9nH-is-qzW" firstAttribute="centerX" secondItem="zaD-bb-GrM" secondAttribute="centerX" id="QsS-CZ-KY3"/>
+                            <constraint firstItem="9nH-is-qzW" firstAttribute="centerX" secondItem="iHS-aE-a8F" secondAttribute="centerX" id="QsS-CZ-KY3"/>
                             <constraint firstItem="9nH-is-qzW" firstAttribute="centerY" secondItem="iHS-aE-a8F" secondAttribute="centerY" id="Qvl-qw-cHa"/>
                             <constraint firstItem="KG2-EX-pi4" firstAttribute="top" secondItem="9nH-is-qzW" secondAttribute="bottom" constant="16" id="oCy-7u-Na3"/>
                         </constraints>
-                        <viewLayoutGuide key="safeArea" id="zaD-bb-GrM"/>
                     </view>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="J7d-jW-kpJ" userLabel="First Responder" sceneMemberID="firstResponder"/>
