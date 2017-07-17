@@ -26,7 +26,10 @@ open class SideSpringTransitionFinalVC: UIViewController, ForceTouchDelegate
     
     @IBAction func dismiss()
     {
-        UIImpactFeedbackGenerator(style: .light).impactOccurred()
+        if UserDefaults.standard.bool(forKey: HapticFeedbackDefault)
+        {
+            UISelectionFeedbackGenerator().selectionChanged()
+        }
         dismissAnimationController?.willBeginInteractively = false
         dismiss(animated: true, completion: nil)
     }

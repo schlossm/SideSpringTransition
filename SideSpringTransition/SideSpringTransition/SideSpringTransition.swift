@@ -8,6 +8,8 @@
 
 import UIKit
 
+public let HapticFeedbackDefault = "HapticFeedback"
+
 @objc public protocol SideSpringTransitionDisplay
 {
     @objc optional func performLastMinuteActions()
@@ -135,28 +137,19 @@ class TransitionDriver
             print("The presenting view controller and/or presented view controller does not exist on the transition context.  Please make sure you are not dismissing or presenting a null view controller")
             return nil
         }
-        
         transitionContext = context
-        
         transitionAnimator = UIViewPropertyAnimator(duration: 0.5, dampingRatio: 1.0, animations: { })
-        transitionAnimator.addAnimations { [unowned self] in
-            self.myAnimateTransition(context)
-        }
+        transitionAnimator.addAnimations { self.myAnimateTransition(context) }
         transitionAnimator.isUserInteractionEnabled = false
-        transitionAnimator.addCompletion { [unowned self] position in
-            self.transitionAnimationCompleted(position: position)
-        }
+        transitionAnimator.addCompletion { position in self.transitionAnimationCompleted(position: position) }
         
         let containerView = context.containerView
         containerView.insertSubview(toVC.view, belowSubview: fromVC.view)
-        
         fromVC.view.frame = context.finalFrame(for: fromVC)
         toVC.view.frame = context.finalFrame(for: toVC)
         toVC.view.transform = CGAffineTransform(translationX: -toVC.view.frame.width, y: 0.0)
         containerView.layoutIfNeeded()
-        
         toVC.viewWillAppear(true)
-        
         panGestureRecognizer.addTarget(self, action: #selector(updateInteraction(_:)))
     }
     
@@ -187,10 +180,8 @@ class TransitionDriver
         
         UIApplication.shared.keyWindow!.addSubview(toVC.view)
         fromVC.view.removeFromSuperview()
-            
         toVC.viewDidAppear(true)
         fromVC.viewDidDisappear(true)
-        
         transitionContext.completeTransition(true)
         transitionContext = nil
     }
@@ -202,13 +193,10 @@ class TransitionDriver
         case .changed:
              currentVelocity = fromGesture.translation(in: transitionContext.containerView).x
              let translation = fromGesture.translation(in: transitionContext.containerView)
-             
              let percentageChange = translation.x/transitionContext.containerView.frame.size.width
-             
              let percentComplete = transitionAnimator.fractionComplete + percentageChange
              transitionAnimator.fractionComplete = percentComplete
              transitionContext.updateInteractiveTransition(percentComplete)
-             
              fromGesture.setTranslation(.zero, in: transitionContext.containerView)
             
         case .ended, .cancelled, .failed:
