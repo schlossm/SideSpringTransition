@@ -7,7 +7,12 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		10F80AA41F06F5480053A04E /* SideSpringTransition.h in Headers */ = {isa = PBXBuildFile; fileRef = 10F80AA21F06F5480053A04E /* SideSpringTransition.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		10679F831F3D3939009F18FB /* SSTFinalVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 10F80AAE1F06F6520053A04E /* SSTFinalVC.swift */; };
+		10679F841F3D3939009F18FB /* SSTIntermediateVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 10F80AB01F06F6520053A04E /* SSTIntermediateVC.swift */; };
+		10679F851F3D3939009F18FB /* SSTInitialVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 10F80AB11F06F6520053A04E /* SSTInitialVC.swift */; };
+		10679F861F3D3939009F18FB /* SideSpringTransition.swift in Sources */ = {isa = PBXBuildFile; fileRef = 10F80AAF1F06F6520053A04E /* SideSpringTransition.swift */; };
+		10679F951F3D3A34009F18FB /* SideSpringTransition.h in Headers */ = {isa = PBXBuildFile; fileRef = 10F80AA21F06F5480053A04E /* SideSpringTransition.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		10679FB41F3D3AC7009F18FB /* SideSpringTransition.h in Headers */ = {isa = PBXBuildFile; fileRef = 10F80AA21F06F5480053A04E /* SideSpringTransition.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		10F80AB21F06F6EB0053A04E /* SSTFinalVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 10F80AAE1F06F6520053A04E /* SSTFinalVC.swift */; };
 		10F80AB31F06F6EB0053A04E /* SSTIntermediateVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 10F80AB01F06F6520053A04E /* SSTIntermediateVC.swift */; };
 		10F80AB41F06F6EB0053A04E /* SSTInitialVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 10F80AB11F06F6520053A04E /* SSTInitialVC.swift */; };
@@ -15,6 +20,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		10679F7B1F3D38F8009F18FB /* SideSpringTransition.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = SideSpringTransition.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		10F80A9F1F06F5480053A04E /* SideSpringTransition.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = SideSpringTransition.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		10F80AA21F06F5480053A04E /* SideSpringTransition.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SideSpringTransition.h; sourceTree = "<group>"; };
 		10F80AA31F06F5480053A04E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -25,6 +31,13 @@
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
+		10679F771F3D38F8009F18FB /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		10F80A9B1F06F5480053A04E /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
@@ -35,10 +48,19 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		10679FD41F3D3F00009F18FB /* SideSpringTransition */ = {
+			isa = PBXGroup;
+			children = (
+				10F80AA31F06F5480053A04E /* Info.plist */,
+			);
+			path = SideSpringTransition;
+			sourceTree = "<group>";
+		};
 		10F80A951F06F5480053A04E = {
 			isa = PBXGroup;
 			children = (
-				10F80AA11F06F5480053A04E /* SideSpringTransition */,
+				10F80AA11F06F5480053A04E /* Common */,
+				10679FD41F3D3F00009F18FB /* SideSpringTransition */,
 				10F80AA01F06F5480053A04E /* Products */,
 			);
 			sourceTree = "<group>";
@@ -47,11 +69,12 @@
 			isa = PBXGroup;
 			children = (
 				10F80A9F1F06F5480053A04E /* SideSpringTransition.framework */,
+				10679F7B1F3D38F8009F18FB /* SideSpringTransition.framework */,
 			);
 			name = Products;
 			sourceTree = "<group>";
 		};
-		10F80AA11F06F5480053A04E /* SideSpringTransition */ = {
+		10F80AA11F06F5480053A04E /* Common */ = {
 			isa = PBXGroup;
 			children = (
 				10F80AAE1F06F6520053A04E /* SSTFinalVC.swift */,
@@ -59,28 +82,54 @@
 				10F80AB11F06F6520053A04E /* SSTInitialVC.swift */,
 				10F80AAF1F06F6520053A04E /* SideSpringTransition.swift */,
 				10F80AA21F06F5480053A04E /* SideSpringTransition.h */,
-				10F80AA31F06F5480053A04E /* Info.plist */,
 			);
+			name = Common;
 			path = SideSpringTransition;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
 
 /* Begin PBXHeadersBuildPhase section */
+		10679F781F3D38F8009F18FB /* Headers */ = {
+			isa = PBXHeadersBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				10679FB41F3D3AC7009F18FB /* SideSpringTransition.h in Headers */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		10F80A9C1F06F5480053A04E /* Headers */ = {
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				10F80AA41F06F5480053A04E /* SideSpringTransition.h in Headers */,
+				10679F951F3D3A34009F18FB /* SideSpringTransition.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXHeadersBuildPhase section */
 
 /* Begin PBXNativeTarget section */
-		10F80A9E1F06F5480053A04E /* SideSpringTransition */ = {
+		10679F7A1F3D38F8009F18FB /* SideSpringTransition tvOS */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 10F80AA71F06F5480053A04E /* Build configuration list for PBXNativeTarget "SideSpringTransition" */;
+			buildConfigurationList = 10679F801F3D38F8009F18FB /* Build configuration list for PBXNativeTarget "SideSpringTransition tvOS" */;
+			buildPhases = (
+				10679F761F3D38F8009F18FB /* Sources */,
+				10679F771F3D38F8009F18FB /* Frameworks */,
+				10679F781F3D38F8009F18FB /* Headers */,
+				10679F791F3D38F8009F18FB /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = "SideSpringTransition tvOS";
+			productName = sst;
+			productReference = 10679F7B1F3D38F8009F18FB /* SideSpringTransition.framework */;
+			productType = "com.apple.product-type.framework";
+		};
+		10F80A9E1F06F5480053A04E /* SideSpringTransition iOS */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 10F80AA71F06F5480053A04E /* Build configuration list for PBXNativeTarget "SideSpringTransition iOS" */;
 			buildPhases = (
 				10F80A9A1F06F5480053A04E /* Sources */,
 				10F80A9B1F06F5480053A04E /* Frameworks */,
@@ -91,7 +140,7 @@
 			);
 			dependencies = (
 			);
-			name = SideSpringTransition;
+			name = "SideSpringTransition iOS";
 			productName = SideSpringTransition;
 			productReference = 10F80A9F1F06F5480053A04E /* SideSpringTransition.framework */;
 			productType = "com.apple.product-type.framework";
@@ -105,6 +154,10 @@
 				LastUpgradeCheck = 0830;
 				ORGANIZATIONNAME = "Michael Schloss";
 				TargetAttributes = {
+					10679F7A1F3D38F8009F18FB = {
+						CreatedOnToolsVersion = 8.3.3;
+						ProvisioningStyle = Automatic;
+					};
 					10F80A9E1F06F5480053A04E = {
 						CreatedOnToolsVersion = 9.0;
 						LastSwiftMigration = 0900;
@@ -124,12 +177,20 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				10F80A9E1F06F5480053A04E /* SideSpringTransition */,
+				10F80A9E1F06F5480053A04E /* SideSpringTransition iOS */,
+				10679F7A1F3D38F8009F18FB /* SideSpringTransition tvOS */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
+		10679F791F3D38F8009F18FB /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		10F80A9D1F06F5480053A04E /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -140,6 +201,17 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
+		10679F761F3D38F8009F18FB /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				10679F861F3D3939009F18FB /* SideSpringTransition.swift in Sources */,
+				10679F851F3D3939009F18FB /* SSTInitialVC.swift in Sources */,
+				10679F841F3D3939009F18FB /* SSTIntermediateVC.swift in Sources */,
+				10679F831F3D3939009F18FB /* SSTFinalVC.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		10F80A9A1F06F5480053A04E /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -154,6 +226,54 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin XCBuildConfiguration section */
+		10679F811F3D38F8009F18FB /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CODE_SIGN_IDENTITY = "";
+				DEFINES_MODULE = YES;
+				DEVELOPMENT_TEAM = 7SSRC7UGJ6;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				INFOPLIST_FILE = "$(SRCROOT)/SideSpringTransition/Info.plist";
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = com.michaelschloss.SideSpringTransition;
+				PRODUCT_NAME = SideSpringTransition;
+				SDKROOT = appletvos;
+				SKIP_INSTALL = YES;
+				SWIFT_VERSION = 3.0;
+				TARGETED_DEVICE_FAMILY = 3;
+				TVOS_DEPLOYMENT_TARGET = 10.2;
+			};
+			name = Debug;
+		};
+		10679F821F3D38F8009F18FB /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CODE_SIGN_IDENTITY = "";
+				DEFINES_MODULE = YES;
+				DEVELOPMENT_TEAM = 7SSRC7UGJ6;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				INFOPLIST_FILE = "$(SRCROOT)/SideSpringTransition/Info.plist";
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = com.michaelschloss.SideSpringTransition;
+				PRODUCT_NAME = SideSpringTransition;
+				SDKROOT = appletvos;
+				SKIP_INSTALL = YES;
+				SWIFT_VERSION = 3.0;
+				TARGETED_DEVICE_FAMILY = 3;
+				TVOS_DEPLOYMENT_TARGET = 10.2;
+			};
+			name = Release;
+		};
 		10F80AA51F06F5480053A04E /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -280,9 +400,11 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.michaelschloss.SideSpringTransition;
-				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
+				PRODUCT_NAME = SideSpringTransition;
 				PROVISIONING_PROFILE_SPECIFIER = "";
+				SDKROOT = iphoneos10.3;
 				SKIP_INSTALL = YES;
+				SUPPORTED_PLATFORMS = "iphonesimulator iphoneos";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 3.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -306,9 +428,11 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.michaelschloss.SideSpringTransition;
-				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
+				PRODUCT_NAME = SideSpringTransition;
 				PROVISIONING_PROFILE_SPECIFIER = "";
+				SDKROOT = iphoneos10.3;
 				SKIP_INSTALL = YES;
+				SUPPORTED_PLATFORMS = "iphonesimulator iphoneos";
 				SWIFT_VERSION = 3.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
@@ -317,6 +441,14 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
+		10679F801F3D38F8009F18FB /* Build configuration list for PBXNativeTarget "SideSpringTransition tvOS" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				10679F811F3D38F8009F18FB /* Debug */,
+				10679F821F3D38F8009F18FB /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+		};
 		10F80A991F06F5480053A04E /* Build configuration list for PBXProject "SideSpringTransition" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
@@ -326,7 +458,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		10F80AA71F06F5480053A04E /* Build configuration list for PBXNativeTarget "SideSpringTransition" */ = {
+		10F80AA71F06F5480053A04E /* Build configuration list for PBXNativeTarget "SideSpringTransition iOS" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				10F80AA81F06F5480053A04E /* Debug */,

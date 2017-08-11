@@ -78,13 +78,22 @@ class ForwardSideSpringTransition: NSObject, UIViewControllerAnimatedTransitioni
     }
 }
 
-open class SideSpringTransition: NSObject
-{
-    var transitionDriver : TransitionDriver!
-    var panGestureRecognizer : UIScreenEdgePanGestureRecognizer!
-    
-    open var willBeginInteractively = true
-}
+#if os(iOS)
+    open class SideSpringTransition: NSObject
+    {
+        var transitionDriver : TransitionDriver!
+        var panGestureRecognizer : UIScreenEdgePanGestureRecognizer!
+        
+        open var willBeginInteractively = true
+    }
+#elseif os(tvOS)
+    open class SideSpringTransition: NSObject
+    {
+        var transitionDriver : TransitionDriver!
+        
+        open var willBeginInteractively = true
+    }
+#endif
 
 extension SideSpringTransition : UIViewControllerAnimatedTransitioning
 {
@@ -105,7 +114,11 @@ extension SideSpringTransition : UIViewControllerInteractiveTransitioning
 {
     public func startInteractiveTransition(_ transitionContext: UIViewControllerContextTransitioning)
     {
-        transitionDriver = TransitionDriver(context: transitionContext, panGestureRecognizer: panGestureRecognizer)
+        #if os(iOS)
+            transitionDriver = TransitionDriver(context: transitionContext, panGestureRecognizer: panGestureRecognizer)
+        #elseif os(tvOS)
+            transitionDriver = TransitionDriver(context: transitionContext)
+        #endif
         if wantsInteractiveStart == false
         {
             transitionDriver.endInteraction()
@@ -130,6 +143,7 @@ class TransitionDriver
     fileprivate var transitionContext : UIViewControllerContextTransitioning!
     fileprivate var currentVelocity : CGFloat = 0.0
     
+    #if os(iOS)
     init?(context: UIViewControllerContextTransitioning, panGestureRecognizer: UIScreenEdgePanGestureRecognizer)
     {
         guard let fromVC = context.viewController(forKey: .from), let toVC = context.viewController(forKey: .to) else
@@ -152,6 +166,29 @@ class TransitionDriver
         toVC.viewWillAppear(true)
         panGestureRecognizer.addTarget(self, action: #selector(updateInteraction(_:)))
     }
+    #elseif os(tvOS)
+    init?(context: UIViewControllerContextTransitioning)
+    {
+        guard let fromVC = context.viewController(forKey: .from), let toVC = context.viewController(forKey: .to) else
+        {
+            print("The presenting view controller and/or presented view controller does not exist on the transition context.  Please make sure you are not dismissing or presenting a null view controller")
+            return nil
+        }
+        transitionContext = context
+        transitionAnimator = UIViewPropertyAnimator(duration: 0.5, dampingRatio: 1.0, animations: { })
+        transitionAnimator.addAnimations { self.myAnimateTransition(context) }
+        transitionAnimator.isUserInteractionEnabled = false
+        transitionAnimator.addCompletion { position in self.transitionAnimationCompleted(position: position) }
+        
+        let containerView = context.containerView
+        containerView.insertSubview(toVC.view, belowSubview: fromVC.view)
+        fromVC.view.frame = context.finalFrame(for: fromVC)
+        toVC.view.frame = context.finalFrame(for: toVC)
+        toVC.view.transform = CGAffineTransform(translationX: -toVC.view.frame.width, y: 0.0)
+        containerView.layoutIfNeeded()
+        toVC.viewWillAppear(true)
+    }
+    #endif
     
     func myAnimateTransition(_ transitionContext: UIViewControllerContextTransitioning)
     {
@@ -186,25 +223,27 @@ class TransitionDriver
         transitionContext = nil
     }
     
+    #if os(iOS)
     @objc func updateInteraction(_ fromGesture: UIScreenEdgePanGestureRecognizer)
     {
-        switch fromGesture.state
-        {
-        case .changed:
-             currentVelocity = fromGesture.translation(in: transitionContext.containerView).x
-             let translation = fromGesture.translation(in: transitionContext.containerView)
-             let percentageChange = translation.x/transitionContext.containerView.frame.size.width
-             let percentComplete = transitionAnimator.fractionComplete + percentageChange
-             transitionAnimator.fractionComplete = percentComplete
-             transitionContext.updateInteractiveTransition(percentComplete)
-             fromGesture.setTranslation(.zero, in: transitionContext.containerView)
-            
-        case .ended, .cancelled, .failed:
-            endInteraction()
-            
-        default: break
-        }
+    switch fromGesture.state
+    {
+    case .changed:
+    currentVelocity = fromGesture.translation(in: transitionContext.containerView).x
+    let translation = fromGesture.translation(in: transitionContext.containerView)
+    let percentageChange = translation.x/transitionContext.containerView.frame.size.width
+    let percentComplete = transitionAnimator.fractionComplete + percentageChange
+    transitionAnimator.fractionComplete = percentComplete
+    transitionContext.updateInteractiveTransition(percentComplete)
+    fromGesture.setTranslation(.zero, in: transitionContext.containerView)
+    
+    case .ended, .cancelled, .failed:
+    endInteraction()
+    
+    default: break
     }
+    }
+    #endif
     
     func endInteraction()
     {

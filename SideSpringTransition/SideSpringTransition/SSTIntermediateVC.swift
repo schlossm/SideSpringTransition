@@ -6,45 +6,63 @@
 //  Copyright © 2017 Michael Schloss. All rights reserved.
 //
 
-open class SideSpringTransitionIntermediateVC: SideSpringTransitionInitialVC, ForceTouchDelegate
-{
-    private(set) public var edgePan : UIScreenEdgePanGestureRecognizer!
-    
-    fileprivate let transition = SideSpringTransition()
-    
-    override open func viewWillAppear(_ animated: Bool)
+#if os(iOS)
+    open class SideSpringTransitionIntermediateVC: SideSpringTransitionInitialVC, ForceTouchDelegate
     {
-        super.viewWillAppear(animated)
-        addEdgePan()
-    }
-    
-    @objc func dismiss(edgePan: UIScreenEdgePanGestureRecognizer)
-    {
-        guard edgePan.state == .began else { return }
+        private(set) public var edgePan : UIScreenEdgePanGestureRecognizer!
         
-        dismissAnimationController?.willBeginInteractively = true
-        dismiss(animated: true, completion: nil)
-    }
-    
-    @IBAction func dismiss()
-    {
-        if UserDefaults.standard.bool(forKey: HapticFeedbackDefault)
+        fileprivate let transition = SideSpringTransition()
+        
+        override open func viewWillAppear(_ animated: Bool)
         {
-            UISelectionFeedbackGenerator().selectionChanged()
+            super.viewWillAppear(animated)
+            addEdgePan()
         }
-        dismissAnimationController?.willBeginInteractively = false
-        dismiss(animated: true, completion: nil)
-    }
-    
-    func addEdgePan()
-    {
-        if let edge = edgePan
+        
+        @objc func dismiss(edgePan: UIScreenEdgePanGestureRecognizer)
         {
-            view.removeGestureRecognizer(edge)
+            guard edgePan.state == .began else { return }
+            
+            dismissAnimationController?.willBeginInteractively = true
+            dismiss(animated: true, completion: nil)
         }
-        edgePan = UIScreenEdgePanGestureRecognizer(target: self, action: #selector(dismiss(edgePan:)))
-        edgePan.edges = .left
-        view.addGestureRecognizer(edgePan)
-        dismissAnimationController?.panGestureRecognizer = edgePan
+        
+        @IBAction func dismiss()
+        {
+            if UserDefaults.standard.bool(forKey: HapticFeedbackDefault)
+            {
+                UISelectionFeedbackGenerator().selectionChanged()
+            }
+            dismissAnimationController?.willBeginInteractively = false
+            dismiss(animated: true, completion: nil)
+        }
+        
+        func addEdgePan()
+        {
+            if let edge = edgePan
+            {
+                view.removeGestureRecognizer(edge)
+            }
+            edgePan = UIScreenEdgePanGestureRecognizer(target: self, action: #selector(dismiss(edgePan:)))
+            edgePan.edges = .left
+            view.addGestureRecognizer(edgePan)
+            dismissAnimationController?.panGestureRecognizer = edgePan
+        }
     }
-}
+#elseif os(tvOS)
+    open class SideSpringTransitionIntermediateVC: SideSpringTransitionInitialVC
+    {
+        fileprivate let transition = SideSpringTransition()
+        
+        override open func viewWillAppear(_ animated: Bool)
+        {
+            super.viewWillAppear(animated)
+        }
+        
+        @IBAction func dismiss()
+        {
+            dismissAnimationController?.willBeginInteractively = false
+            dismiss(animated: true, completion: nil)
+        }
+    }
+#endif
