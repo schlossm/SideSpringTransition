@@ -60,5 +60,15 @@
             dismissAnimationController?.willBeginInteractively = false
             dismiss(animated: true, completion: nil)
         }
+        
+        open override func pressesEnded(_ presses: Set<UIPress>, with event: UIPressesEvent?)
+        {
+            guard presses.contains(where: { $0.type == .menu }) else
+            {
+                super.pressesEnded(presses, with: event)
+                return
+            }
+            dismiss()
+        }
     }
 #endif

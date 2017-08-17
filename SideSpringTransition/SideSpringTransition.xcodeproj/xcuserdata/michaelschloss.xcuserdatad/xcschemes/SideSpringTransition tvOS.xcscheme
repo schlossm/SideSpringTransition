@@ -15,7 +15,7 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "10679F7A1F3D38F8009F18FB"
-               BuildableName = "SideSpringTransition tvOS.framework"
+               BuildableName = "SideSpringTransition.framework"
                BlueprintName = "SideSpringTransition tvOS"
                ReferencedContainer = "container:SideSpringTransition.xcodeproj">
             </BuildableReference>
@@ -46,7 +46,7 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "10679F7A1F3D38F8009F18FB"
-            BuildableName = "SideSpringTransition tvOS.framework"
+            BuildableName = "SideSpringTransition.framework"
             BlueprintName = "SideSpringTransition tvOS"
             ReferencedContainer = "container:SideSpringTransition.xcodeproj">
          </BuildableReference>
@@ -64,7 +64,7 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "10679F7A1F3D38F8009F18FB"
-            BuildableName = "SideSpringTransition tvOS.framework"
+            BuildableName = "SideSpringTransition.framework"
             BlueprintName = "SideSpringTransition tvOS"
             ReferencedContainer = "container:SideSpringTransition.xcodeproj">
          </BuildableReference>
