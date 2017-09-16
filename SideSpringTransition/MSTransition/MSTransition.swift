@@ -15,9 +15,9 @@ protocol ForceTouchDelegate
     func addEdgePan()
 }
 
-extension UIViewController
+public extension UIViewController
 {
-    var dismissAnimationController : SSTDismissalTransition?
+	public var dismissAnimationController : SSTDismissalTransition?
     {
         return transitioningDelegate?.animationController?(forDismissed: self) as? InteractableTransition
     }
@@ -61,7 +61,7 @@ public final class MSTransitionController : SSTController
     {
         didSet
         {
-            dismissalTransition.willBeginInteractively = false
+            dismissalTransition.willBeginInteractively = wantsInteractiveStart
         }
     }
     public private(set) var presentationTransition : UIViewControllerAnimatedTransitioning = NonInteractableTransition()
@@ -194,6 +194,7 @@ private class TransitionDriver
     
     func setup(context: UIViewControllerContextTransitioning)
     {
+        MSTransitionController.default.wantsInteractiveStart = true
         guard let fromVC = context.viewController(forKey: .from), let toVC = context.viewController(forKey: .to) else
         {
             print("The presenting view controller and/or presented view controller does not exist on the transition context.  Please make sure you are not dismissing or presenting a null view controller")

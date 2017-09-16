@@ -30,7 +30,7 @@ open class MSIntermediateVC: MSInitialVC
                 UISelectionFeedbackGenerator().selectionChanged()
             }
         #endif
-        dismissAnimationController?.willBeginInteractively = false
+        MSTransitionController.default.wantsInteractiveStart = false
         dismiss(animated: true, completion: nil)
     }
 }
@@ -42,7 +42,7 @@ open class MSIntermediateVC: MSInitialVC
         {
             guard edgePan.state == .began else { return }
             
-            dismissAnimationController?.willBeginInteractively = true
+            MSTransitionController.default.wantsInteractiveStart = true
             dismiss(animated: true, completion: nil)
         }
         
