@@ -228,6 +228,11 @@ private class TransitionDriver
         let fromVC = transitionContext.viewController(forKey: .from)!
         let toVC = transitionContext.viewController(forKey: .to)!
         
+        if let loadingIndicatorMoveable = toVC as? LoadingIndicatorMoveable
+        {
+            MSTransitionController.default.progressIndicator?.center = loadingIndicatorMoveable.loadingIndicatorPosition
+        }
+        
         fromVC.view.transform = CGAffineTransform(translationX: toVC.view.frame.width, y: 0.0)
         toVC.view.transform = .identity
     }
