@@ -1,6 +1,6 @@
 //
-//  SideSpringTransition.swift
-//  SideSpringTransition
+//  MSTransition.swift
+//  MSTransition
 //
 //  Created by Michael Schloss on 6/16/16.
 //  Copyright © 2016 Michael Schloss. All rights reserved.
@@ -10,35 +10,88 @@ import UIKit
 
 public let HapticFeedbackDefault = "HapticFeedback"
 
-@objc public protocol SideSpringTransitionDisplay
-{
-    @objc optional func performLastMinuteActions()
-}
-
 protocol ForceTouchDelegate
 {
     func addEdgePan()
 }
 
-public extension UIViewController
+extension UIViewController
 {
-    public var dismissAnimationController: SideSpringTransition?
+    var dismissAnimationController : SSTDismissalTransition?
     {
-        return transitioningDelegate?.animationController?(forDismissed: self) as? SideSpringTransition
+        return transitioningDelegate?.animationController?(forDismissed: self) as? InteractableTransition
     }
 }
 
-class ForwardSideSpringTransition: NSObject, UIViewControllerAnimatedTransitioning
+protocol LoadingIndicatorMoveable
 {
-    func transitionDuration(using transitionContext: UIViewControllerContextTransitioning?) -> TimeInterval
+	var loadingIndicatorPosition : CGPoint { get }
+}
+
+public protocol SSTDismissalTransition : UIViewControllerAnimatedTransitioning, UIViewControllerInteractiveTransitioning
+{
+    var willBeginInteractively : Bool { get set }
+    
+    #if os(iOS)
+    var panGestureRecognizer : UIScreenEdgePanGestureRecognizer? { get set }
+    #endif
+}
+
+public protocol SSTController
+{
+    static var `default` : SSTController { get }
+    
+    var wantsInteractiveStart : Bool { get set }
+    
+    var presentationTransition : UIViewControllerAnimatedTransitioning { get }
+    
+    var dismissalTransition : SSTDismissalTransition { get }
+    
+    var progressIndicator : UIView? { get set }
+}
+
+public final class MSTransitionController : SSTController
+{
+    public static var `default` : SSTController = MSTransitionController()
+    
+    private var forwardTransition = NonInteractableTransition()
+    private var backwardsTransition = InteractableTransition()
+    
+    public var wantsInteractiveStart : Bool = false
     {
-        return 0.5
+        didSet
+        {
+            dismissalTransition.willBeginInteractively = false
+        }
     }
+    public private(set) var presentationTransition : UIViewControllerAnimatedTransitioning = NonInteractableTransition()
+    public private(set) var dismissalTransition : SSTDismissalTransition = InteractableTransition()
+    
+    public var progressIndicator : UIView?
+    {
+        didSet
+        {
+            if progressIndicator?.superview?.classForCoder != UIWindow.classForCoder()
+            {
+                print("The progress indicator must be a subview of a UIWindow in order for the indicator to fluidly move between views")
+            }
+        }
+    }
+    
+    private init() { }
+}
+
+private class NonInteractableTransition: NSObject, UIViewControllerAnimatedTransitioning
+{
+    var isReversed = false
+    
+    func transitionDuration(using transitionContext: UIViewControllerContextTransitioning?) -> TimeInterval { return 0.5 }
     
     func animateTransition(using transitionContext: UIViewControllerContextTransitioning)
     {
         guard let fromVC = transitionContext.viewController(forKey: .from), let toVC = transitionContext.viewController(forKey: .to) else
         {
+            print("The presenting view controller and/or presented view controller does not exist on the transition context.  Please make sure you are not dismissing or presenting a null view controller")
             transitionContext.completeTransition(false)
             return
         }
@@ -50,11 +103,16 @@ class ForwardSideSpringTransition: NSObject, UIViewControllerAnimatedTransitioni
         toVC.view.frame = transitionContext.finalFrame(for: toVC)
         containerView.layoutIfNeeded()
         
-        toVC.view.transform = CGAffineTransform(translationX: toVC.view.frame.width, y: 0.0)
+        toVC.view.transform = CGAffineTransform(translationX: (isReversed ? -1 : 1) * toVC.view.frame.width, y: 0.0)
         
         let propertyAnimator = UIViewPropertyAnimator(duration: transitionDuration(using: transitionContext), dampingRatio: 1.0) {
-            fromVC.view.transform = CGAffineTransform(translationX: -toVC.view.frame.width, y: 0.0)
+            fromVC.view.transform = CGAffineTransform(translationX: (self.isReversed ? 1 : -1) * toVC.view.frame.width, y: 0.0)
             toVC.view.transform = .identity
+            
+            if let loadingIndicatorMoveable = toVC as? LoadingIndicatorMoveable
+            {
+                MSTransitionController.default.progressIndicator?.center = loadingIndicatorMoveable.loadingIndicatorPosition
+            }
         }
         propertyAnimator.isUserInteractionEnabled = false
         propertyAnimator.addCompletion {
@@ -71,31 +129,22 @@ class ForwardSideSpringTransition: NSObject, UIViewControllerAnimatedTransitioni
             fromVC.viewDidDisappear(true)
         }
         
-        (toVC as? SideSpringTransitionDisplay)?.performLastMinuteActions?()
-        
         fromVC.viewWillDisappear(true)
         propertyAnimator.startAnimation()
     }
 }
 
-#if os(iOS)
-    open class SideSpringTransition: NSObject
-    {
-        var transitionDriver : TransitionDriver!
-        var panGestureRecognizer : UIScreenEdgePanGestureRecognizer!
-        
-        open var willBeginInteractively = true
-    }
-#elseif os(tvOS)
-    open class SideSpringTransition: NSObject
-    {
-        var transitionDriver : TransitionDriver!
-        
-        open var willBeginInteractively = true
-    }
-#endif
+private class InteractableTransition: NSObject, SSTDismissalTransition
+{
+    fileprivate var transitionDriver = TransitionDriver()
+    var willBeginInteractively = true
+    
+    #if os(iOS)
+    var panGestureRecognizer : UIScreenEdgePanGestureRecognizer?
+    #endif
+}
 
-extension SideSpringTransition : UIViewControllerAnimatedTransitioning
+extension InteractableTransition
 {
     public func transitionDuration(using transitionContext: UIViewControllerContextTransitioning?) -> TimeInterval
     {
@@ -110,24 +159,19 @@ extension SideSpringTransition : UIViewControllerAnimatedTransitioning
     }
 }
 
-extension SideSpringTransition : UIViewControllerInteractiveTransitioning
+extension InteractableTransition
 {
     public func startInteractiveTransition(_ transitionContext: UIViewControllerContextTransitioning)
     {
         #if os(iOS)
-            transitionDriver = TransitionDriver(context: transitionContext, panGestureRecognizer: panGestureRecognizer)
+            transitionDriver.setup(context: transitionContext, andPanGesture: panGestureRecognizer)
         #elseif os(tvOS)
-            transitionDriver = TransitionDriver(context: transitionContext)
+            transitionDriver.setup(context: transitionContext)
         #endif
         if wantsInteractiveStart == false
         {
             transitionDriver.endInteraction()
         }
-    }
-    
-    public func animationEnded(_ transitionCompleted: Bool)
-    {
-        transitionDriver = nil
     }
     
     public var wantsInteractiveStart: Bool
@@ -136,57 +180,46 @@ extension SideSpringTransition : UIViewControllerInteractiveTransitioning
     }
 }
 
-class TransitionDriver
+private class TransitionDriver
 {
-    var transitionAnimator: UIViewPropertyAnimator
+    let transitionAnimator : UIViewPropertyAnimator = UIViewPropertyAnimator(duration: 0.5, dampingRatio: 1.0, animations: nil)
+    #if os(iOS)
+    var panGestureRecognizer : UIScreenEdgePanGestureRecognizer?
+    #endif
     
-    fileprivate var transitionContext : UIViewControllerContextTransitioning!
-    fileprivate var currentVelocity : CGFloat = 0.0
+    private var transitionContext : UIViewControllerContextTransitioning?
+    private var currentVelocity : CGFloat = 0.0
+    
+    init() { }
+    
+    func setup(context: UIViewControllerContextTransitioning)
+    {
+        guard let fromVC = context.viewController(forKey: .from), let toVC = context.viewController(forKey: .to) else
+        {
+            print("The presenting view controller and/or presented view controller does not exist on the transition context.  Please make sure you are not dismissing or presenting a null view controller")
+            return
+        }
+        transitionContext = context
+        transitionAnimator.addAnimations { self.myAnimateTransition(context) }
+        transitionAnimator.isUserInteractionEnabled = false
+        transitionAnimator.addCompletion { position in self.transitionAnimationCompleted(position: position) }
+        
+        let containerView = context.containerView
+        containerView.insertSubview(toVC.view, belowSubview: fromVC.view)
+        fromVC.view.frame = context.finalFrame(for: fromVC)
+        toVC.view.frame = context.finalFrame(for: toVC)
+        toVC.view.transform = CGAffineTransform(translationX: -toVC.view.frame.width, y: 0.0)
+        containerView.layoutIfNeeded()
+        toVC.viewWillAppear(true)
+    }
     
     #if os(iOS)
-    init?(context: UIViewControllerContextTransitioning, panGestureRecognizer: UIScreenEdgePanGestureRecognizer)
+    func setup(context: UIViewControllerContextTransitioning, andPanGesture panGesture: UIScreenEdgePanGestureRecognizer?)
     {
-        guard let fromVC = context.viewController(forKey: .from), let toVC = context.viewController(forKey: .to) else
-        {
-            print("The presenting view controller and/or presented view controller does not exist on the transition context.  Please make sure you are not dismissing or presenting a null view controller")
-            return nil
-        }
-        transitionContext = context
-        transitionAnimator = UIViewPropertyAnimator(duration: 0.5, dampingRatio: 1.0, animations: { })
-        transitionAnimator.addAnimations { self.myAnimateTransition(context) }
-        transitionAnimator.isUserInteractionEnabled = false
-        transitionAnimator.addCompletion { position in self.transitionAnimationCompleted(position: position) }
+        setup(context: context)
         
-        let containerView = context.containerView
-        containerView.insertSubview(toVC.view, belowSubview: fromVC.view)
-        fromVC.view.frame = context.finalFrame(for: fromVC)
-        toVC.view.frame = context.finalFrame(for: toVC)
-        toVC.view.transform = CGAffineTransform(translationX: -toVC.view.frame.width, y: 0.0)
-        containerView.layoutIfNeeded()
-        toVC.viewWillAppear(true)
-        panGestureRecognizer.addTarget(self, action: #selector(updateInteraction(_:)))
-    }
-    #elseif os(tvOS)
-    init?(context: UIViewControllerContextTransitioning)
-    {
-        guard let fromVC = context.viewController(forKey: .from), let toVC = context.viewController(forKey: .to) else
-        {
-            print("The presenting view controller and/or presented view controller does not exist on the transition context.  Please make sure you are not dismissing or presenting a null view controller")
-            return nil
-        }
-        transitionContext = context
-        transitionAnimator = UIViewPropertyAnimator(duration: 0.5, dampingRatio: 1.0, animations: { })
-        transitionAnimator.addAnimations { self.myAnimateTransition(context) }
-        transitionAnimator.isUserInteractionEnabled = false
-        transitionAnimator.addCompletion { position in self.transitionAnimationCompleted(position: position) }
-        
-        let containerView = context.containerView
-        containerView.insertSubview(toVC.view, belowSubview: fromVC.view)
-        fromVC.view.frame = context.finalFrame(for: fromVC)
-        toVC.view.frame = context.finalFrame(for: toVC)
-        toVC.view.transform = CGAffineTransform(translationX: -toVC.view.frame.width, y: 0.0)
-        containerView.layoutIfNeeded()
-        toVC.viewWillAppear(true)
+        panGesture?.addTarget(self, action: #selector(updateInteraction(_:)))
+        panGestureRecognizer = panGesture
     }
     #endif
     
@@ -201,8 +234,7 @@ class TransitionDriver
     
     fileprivate func transitionAnimationCompleted(position: UIViewAnimatingPosition)
     {
-        let fromVC = transitionContext.viewController(forKey: .from)!
-        let toVC = transitionContext.viewController(forKey: .to)!
+        guard let transitionContext = transitionContext, let fromVC = transitionContext.viewController(forKey: .from), let toVC = transitionContext.viewController(forKey: .to) else { return }
         
         guard position == .end else
         {
@@ -220,33 +252,36 @@ class TransitionDriver
         toVC.viewDidAppear(true)
         fromVC.viewDidDisappear(true)
         transitionContext.completeTransition(true)
-        transitionContext = nil
+        self.transitionContext = nil
     }
     
     #if os(iOS)
     @objc func updateInteraction(_ fromGesture: UIScreenEdgePanGestureRecognizer)
     {
-    switch fromGesture.state
-    {
-    case .changed:
-    currentVelocity = fromGesture.translation(in: transitionContext.containerView).x
-    let translation = fromGesture.translation(in: transitionContext.containerView)
-    let percentageChange = translation.x/transitionContext.containerView.frame.size.width
-    let percentComplete = transitionAnimator.fractionComplete + percentageChange
-    transitionAnimator.fractionComplete = percentComplete
-    transitionContext.updateInteractiveTransition(percentComplete)
-    fromGesture.setTranslation(.zero, in: transitionContext.containerView)
-    
-    case .ended, .cancelled, .failed:
-    endInteraction()
-    
-    default: break
-    }
+        guard let transitionContext = transitionContext else { return }
+        switch fromGesture.state
+        {
+        case .changed:
+            currentVelocity = fromGesture.translation(in: transitionContext.containerView).x
+            let translation = fromGesture.translation(in: transitionContext.containerView)
+            let percentageChange = translation.x/transitionContext.containerView.frame.size.width
+            let percentComplete = transitionAnimator.fractionComplete + percentageChange
+            transitionAnimator.fractionComplete = percentComplete
+            transitionContext.updateInteractiveTransition(percentComplete)
+            fromGesture.setTranslation(.zero, in: transitionContext.containerView)
+            
+        case .ended, .cancelled, .failed:
+            endInteraction()
+            
+        default: break
+        }
     }
     #endif
     
     func endInteraction()
     {
+        guard let transitionContext = transitionContext else { return }
+        
         guard transitionContext.isInteractive else
         {
             transitionContext.finishInteractiveTransition()
@@ -260,13 +295,13 @@ class TransitionDriver
         animate(to: completionPosition)
     }
     
-    fileprivate func animate(to position: UIViewAnimatingPosition)
+    private func animate(to position: UIViewAnimatingPosition)
     {
         transitionAnimator.isReversed = (position == .start)
         transitionAnimator.state == .inactive ? transitionAnimator.startAnimation() : transitionAnimator.continueAnimation(withTimingParameters: nil, durationFactor: 0)
     }
     
-    fileprivate func completionPosition() -> UIViewAnimatingPosition
+    private func completionPosition() -> UIViewAnimatingPosition
     {
         return (transitionAnimator.fractionComplete < 0.3 ? (currentVelocity > 5.0) : (currentVelocity > -5.0)) ? .end : .start
     }

@@ -1,16 +1,16 @@
 //
-//  SSTInitialVC.swift
-//  SideSpringTransition
+//  MSInitialVC.swift
+//  MSTransition
 //
 //  Created by Michael Schloss on 6/16/16.
 //  Copyright © 2017 Michael Schloss. All rights reserved.
 //
 
-open class SideSpringTransitionInitialVC: UIViewController, UIViewControllerTransitioningDelegate, UIViewControllerPreviewingDelegate
+open class MSInitialVC: UIViewController, UIViewControllerTransitioningDelegate, UIViewControllerPreviewingDelegate
 {
     open var forceTouchRegisters = [UIViewControllerPreviewing]()
     
-    fileprivate let transition = SideSpringTransition()
+    fileprivate let transition = MSTransitionController.default.dismissalTransition
     
     override open func viewWillDisappear(_ animated: Bool)
     {
@@ -22,7 +22,7 @@ open class SideSpringTransitionInitialVC: UIViewController, UIViewControllerTran
     
     public func animationController(forPresented presented: UIViewController, presenting: UIViewController, source: UIViewController) -> UIViewControllerAnimatedTransitioning?
     {
-        return ForwardSideSpringTransition()
+        return MSTransitionController.default.presentationTransition
     }
     
     public func animationController(forDismissed dismissed: UIViewController) -> UIViewControllerAnimatedTransitioning?
