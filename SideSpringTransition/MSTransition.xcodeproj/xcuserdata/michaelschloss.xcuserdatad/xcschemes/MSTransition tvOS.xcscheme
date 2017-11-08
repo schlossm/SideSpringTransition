@@ -17,7 +17,7 @@
                BlueprintIdentifier = "10679F7A1F3D38F8009F18FB"
                BuildableName = "MSTransition.framework"
                BlueprintName = "MSTransition tvOS"
-               ReferencedContainer = "container:MSTransition.xcodeproj">
+               ReferencedContainer = "container:../../../iOS Programming/Pentago/MSTransition.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
       </BuildActionEntries>
@@ -50,7 +50,7 @@
             BlueprintIdentifier = "10679F7A1F3D38F8009F18FB"
             BuildableName = "MSTransition.framework"
             BlueprintName = "MSTransition tvOS"
-            ReferencedContainer = "container:MSTransition.xcodeproj">
+            ReferencedContainer = "container:../../../iOS Programming/Pentago/MSTransition.xcodeproj">
          </BuildableReference>
       </MacroExpansion>
       <AdditionalOptions>
@@ -68,7 +68,7 @@
             BlueprintIdentifier = "10679F7A1F3D38F8009F18FB"
             BuildableName = "MSTransition.framework"
             BlueprintName = "MSTransition tvOS"
-            ReferencedContainer = "container:MSTransition.xcodeproj">
+            ReferencedContainer = "container:../../../iOS Programming/Pentago/MSTransition.xcodeproj">
          </BuildableReference>
       </MacroExpansion>
    </ProfileAction>
