@@ -4,19 +4,15 @@
 <dict>
 	<key>SchemeUserState</key>
 	<dict>
-		<key>MSTransition iOS.xcscheme</key>
+		<key>MSTransition iOS.xcscheme_^#shared#^_</key>
 		<dict>
-			<key>isShown</key>
-			<false/>
 			<key>orderHint</key>
-			<integer>7</integer>
+			<integer>1</integer>
 		</dict>
-		<key>MSTransition tvOS.xcscheme</key>
+		<key>MSTransition tvOS.xcscheme_^#shared#^_</key>
 		<dict>
-			<key>isShown</key>
-			<false/>
 			<key>orderHint</key>
-			<integer>8</integer>
+			<integer>0</integer>
 		</dict>
 		<key>SideSpringTransition iOS.xcscheme</key>
 		<dict>
