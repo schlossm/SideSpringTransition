@@ -7,9 +7,9 @@
 //
 
 import UIKit
-import SideSpringTransition
+import MSTransition
 
-class ViewController: SideSpringTransitionInitialVC
+class ViewController: MSInitialVC
 {
     @IBOutlet var nextButton: UIButton!
     

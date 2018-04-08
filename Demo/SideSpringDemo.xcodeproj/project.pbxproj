@@ -12,24 +12,31 @@
 		10BB218A1E2AA239003AC0DA /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 10BB21881E2AA239003AC0DA /* Main.storyboard */; };
 		10BB218C1E2AA239003AC0DA /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 10BB218B1E2AA239003AC0DA /* Assets.xcassets */; };
 		10BB218F1E2AA239003AC0DA /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 10BB218D1E2AA239003AC0DA /* LaunchScreen.storyboard */; };
-		10EAB1061F07082700496944 /* SideSpringTransition.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 10500B7C1F070713004EB0B2 /* SideSpringTransition.framework */; };
-		10EAB1071F07082700496944 /* SideSpringTransition.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 10500B7C1F070713004EB0B2 /* SideSpringTransition.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		10CBDEDF20799CE00072B383 /* MSTransition.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 10CBDEDC20799CC60072B383 /* MSTransition.framework */; };
+		10CBDEE020799CE00072B383 /* MSTransition.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 10CBDEDC20799CC60072B383 /* MSTransition.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
-		10500B7B1F070713004EB0B2 /* PBXContainerItemProxy */ = {
+		10CBDEDB20799CC60072B383 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
-			containerPortal = 10500B771F070713004EB0B2 /* SideSpringTransition.xcodeproj */;
+			containerPortal = 10CBDED620799CC50072B383 /* MSTransition.xcodeproj */;
 			proxyType = 2;
 			remoteGlobalIDString = 10F80A9F1F06F5480053A04E;
-			remoteInfo = SideSpringTransition;
+			remoteInfo = "MSTransition iOS";
 		};
-		10EAB1081F07082700496944 /* PBXContainerItemProxy */ = {
+		10CBDEDD20799CC60072B383 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
-			containerPortal = 10500B771F070713004EB0B2 /* SideSpringTransition.xcodeproj */;
+			containerPortal = 10CBDED620799CC50072B383 /* MSTransition.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 10679F7B1F3D38F8009F18FB;
+			remoteInfo = "MSTransition tvOS";
+		};
+		10CBDEE120799CE00072B383 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 10CBDED620799CC50072B383 /* MSTransition.xcodeproj */;
 			proxyType = 1;
 			remoteGlobalIDString = 10F80A9E1F06F5480053A04E;
-			remoteInfo = SideSpringTransition;
+			remoteInfo = "MSTransition iOS";
 		};
 /* End PBXContainerItemProxy section */
 
@@ -40,7 +47,7 @@
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
-				10EAB1071F07082700496944 /* SideSpringTransition.framework in Embed Frameworks */,
+				10CBDEE020799CE00072B383 /* MSTransition.framework in Embed Frameworks */,
 			);
 			name = "Embed Frameworks";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -48,7 +55,6 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
-		10500B771F070713004EB0B2 /* SideSpringTransition.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = SideSpringTransition.xcodeproj; path = ../SideSpringTransition/SideSpringTransition.xcodeproj; sourceTree = "<group>"; };
 		10BB21811E2AA239003AC0DA /* SideSpringDemo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SideSpringDemo.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		10BB21841E2AA239003AC0DA /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		10BB21861E2AA239003AC0DA /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -56,6 +62,7 @@
 		10BB218B1E2AA239003AC0DA /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		10BB218E1E2AA239003AC0DA /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		10BB21901E2AA239003AC0DA /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		10CBDED620799CC50072B383 /* MSTransition.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = MSTransition.xcodeproj; path = ../SideSpringTransition/MSTransition.xcodeproj; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -63,25 +70,17 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				10EAB1061F07082700496944 /* SideSpringTransition.framework in Frameworks */,
+				10CBDEDF20799CE00072B383 /* MSTransition.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		10500B781F070713004EB0B2 /* Products */ = {
-			isa = PBXGroup;
-			children = (
-				10500B7C1F070713004EB0B2 /* SideSpringTransition.framework */,
-			);
-			name = Products;
-			sourceTree = "<group>";
-		};
 		10BB21781E2AA239003AC0DA = {
 			isa = PBXGroup;
 			children = (
-				10500B771F070713004EB0B2 /* SideSpringTransition.xcodeproj */,
+				10CBDED620799CC50072B383 /* MSTransition.xcodeproj */,
 				10BB21831E2AA239003AC0DA /* SideSpringDemo */,
 				10BB21821E2AA239003AC0DA /* Products */,
 			);
@@ -108,6 +107,15 @@
 			path = SideSpringDemo;
 			sourceTree = "<group>";
 		};
+		10CBDED720799CC50072B383 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				10CBDEDC20799CC60072B383 /* MSTransition.framework */,
+				10CBDEDE20799CC60072B383 /* MSTransition.framework */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -123,7 +131,7 @@
 			buildRules = (
 			);
 			dependencies = (
-				10EAB1091F07082700496944 /* PBXTargetDependency */,
+				10CBDEE220799CE00072B383 /* PBXTargetDependency */,
 			);
 			name = SideSpringDemo;
 			productName = SideSpringDemo;
@@ -161,8 +169,8 @@
 			projectDirPath = "";
 			projectReferences = (
 				{
-					ProductGroup = 10500B781F070713004EB0B2 /* Products */;
-					ProjectRef = 10500B771F070713004EB0B2 /* SideSpringTransition.xcodeproj */;
+					ProductGroup = 10CBDED720799CC50072B383 /* Products */;
+					ProjectRef = 10CBDED620799CC50072B383 /* MSTransition.xcodeproj */;
 				},
 			);
 			projectRoot = "";
@@ -173,11 +181,18 @@
 /* End PBXProject section */
 
 /* Begin PBXReferenceProxy section */
-		10500B7C1F070713004EB0B2 /* SideSpringTransition.framework */ = {
+		10CBDEDC20799CC60072B383 /* MSTransition.framework */ = {
 			isa = PBXReferenceProxy;
 			fileType = wrapper.framework;
-			path = SideSpringTransition.framework;
-			remoteRef = 10500B7B1F070713004EB0B2 /* PBXContainerItemProxy */;
+			path = MSTransition.framework;
+			remoteRef = 10CBDEDB20799CC60072B383 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		10CBDEDE20799CC60072B383 /* MSTransition.framework */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.framework;
+			path = MSTransition.framework;
+			remoteRef = 10CBDEDD20799CC60072B383 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
 /* End PBXReferenceProxy section */
@@ -208,10 +223,10 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
-		10EAB1091F07082700496944 /* PBXTargetDependency */ = {
+		10CBDEE220799CE00072B383 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			name = SideSpringTransition;
-			targetProxy = 10EAB1081F07082700496944 /* PBXContainerItemProxy */;
+			name = "MSTransition iOS";
+			targetProxy = 10CBDEE120799CE00072B383 /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
 

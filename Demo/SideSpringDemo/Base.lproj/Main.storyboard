@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="13122.19" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="BYZ-38-t0r">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14109" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="BYZ-38-t0r">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
         <deployment identifier="iOS"/>
-        <development version="8000" identifier="xcode"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13104.16"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14088"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
@@ -43,6 +43,7 @@
                             <constraint firstItem="7Jw-t3-WLX" firstAttribute="top" secondItem="9Lv-Yd-fRp" secondAttribute="bottom" constant="16" id="B8s-mE-ihG"/>
                             <constraint firstItem="7Jw-t3-WLX" firstAttribute="centerX" secondItem="9Lv-Yd-fRp" secondAttribute="centerX" id="oiG-59-gs9"/>
                         </constraints>
+                        <viewLayoutGuide key="safeArea" id="G2a-ks-Ypv"/>
                     </view>
                     <connections>
                         <outlet property="nextButton" destination="7Jw-t3-WLX" id="Tos-d9-i4R"/>
@@ -52,10 +53,10 @@
             </objects>
             <point key="canvasLocation" x="265" y="37"/>
         </scene>
-        <!--Side Spring Transition FinalVC-->
+        <!--FinalVC-->
         <scene sceneID="hG1-fD-xHN">
             <objects>
-                <viewController storyboardIdentifier="second" id="zXi-1q-NGy" customClass="SideSpringTransitionFinalVC" customModule="SideSpringTransition" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="second" id="zXi-1q-NGy" customClass="MSFinalVC" customModule="MSTransition" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="lzH-z5-XQd"/>
                         <viewControllerLayoutGuide type="bottom" id="JhQ-C3-6r4"/>
@@ -85,6 +86,7 @@
                             <constraint firstItem="9nH-is-qzW" firstAttribute="centerY" secondItem="iHS-aE-a8F" secondAttribute="centerY" id="Qvl-qw-cHa"/>
                             <constraint firstItem="KG2-EX-pi4" firstAttribute="top" secondItem="9nH-is-qzW" secondAttribute="bottom" constant="16" id="oCy-7u-Na3"/>
                         </constraints>
+                        <viewLayoutGuide key="safeArea" id="xql-y0-zK9"/>
                     </view>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="J7d-jW-kpJ" userLabel="First Responder" sceneMemberID="firstResponder"/>
