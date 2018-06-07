@@ -16,7 +16,7 @@ open class MSInitialVC: UIViewController, UIViewControllerTransitioningDelegate,
     {
         super.viewWillDisappear(animated)
         
-        forceTouchRegisters.forEach({ unregisterForPreviewing(withContext: $0) })
+        forceTouchRegisters.forEach { unregisterForPreviewing(withContext: $0) }
         forceTouchRegisters.removeAll()
     }
     
