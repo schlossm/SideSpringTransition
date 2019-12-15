@@ -17,7 +17,7 @@ protocol ForceTouchDelegate
 
 public extension UIViewController
 {
-	public var dismissAnimationController : SSTDismissalTransition?
+    var dismissAnimationController : SSTDismissalTransition?
     {
         return transitioningDelegate?.animationController?(forDismissed: self) as? InteractableTransition
     }
