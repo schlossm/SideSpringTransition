@@ -9,30 +9,10 @@
 import UIKit
 import MSTransition
 
-class ViewController: MSInitialVC
+class ViewController : UIViewController
 {
-    @IBOutlet var nextButton: UIButton!
-    
-    override func viewDidAppear(_ animated: Bool)
+    @IBAction private func next()
     {
-        super.viewDidAppear(animated)
-        forceTouchRegisters.append(registerForPreviewing(with: self, sourceView: nextButton))
-    }
-
-    @IBAction func next()
-    {
-        present(secondVC, animated: true, completion: nil)
-    }
-    
-    fileprivate var secondVC: UIViewController {
-        let nextVC = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "second")
-        nextVC.transitioningDelegate = self
-        nextVC.modalPresentationStyle = .custom
-        return nextVC
-    }
-    
-    override func previewingContext(_ previewingContext: UIViewControllerPreviewing, viewControllerForLocation location: CGPoint) -> UIViewController?
-    {
-        return previewingContext.sourceView == nextButton ? secondVC : nil
+        (parent as? MSTransitionContainerViewController)?.present(UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "second"))
     }
 }

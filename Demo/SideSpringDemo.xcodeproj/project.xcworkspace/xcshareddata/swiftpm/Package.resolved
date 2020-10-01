@@ -1,0 +1,16 @@
+{
+  "object": {
+    "pins": [
+      {
+        "package": "MSTransition",
+        "repositoryURL": "https://github.com/schlossm/SideSpringTransition",
+        "state": {
+          "branch": null,
+          "revision": "7c673ace40c95e3d6862eff0cdfb822faf83bd0e",
+          "version": "2.0.0"
+        }
+      }
+    ]
+  },
+  "version": 1
+}
