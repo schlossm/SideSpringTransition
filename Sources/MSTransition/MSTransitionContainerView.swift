@@ -23,7 +23,7 @@ public class MSTransitionContainerViewController : UIViewController
         view.addGestureRecognizer(screenEdgeGesture)
     }
     
-    public func present(_ viewControllerToPresent: UIViewController)
+    public func present(_ viewControllerToPresent: UIViewController, animated: Bool = true)
     {
         addToContainer(viewControllerToPresent)
         
@@ -32,27 +32,30 @@ public class MSTransitionContainerViewController : UIViewController
             viewControllerToPresent.viewWillAppear(false)
             viewControllerToPresent.viewDidAppear(false)
             trackedChildren = [viewControllerToPresent]
+            viewControllerToPresent.didMove(toParent: self)
             return
         }
         trackedChildren.append(viewControllerToPresent)
-        viewControllerToPresent.viewWillAppear(true)
+        viewControllerToPresent.viewWillAppear(animated)
         viewControllerToPresent.view.transform = CGAffineTransform(translationX: view.bounds.width, y: 0.0)
         view.isUserInteractionEnabled = false
-        let animator = UIViewPropertyAnimator(duration: 0.5, dampingRatio: 1.0)
+        let animator = UIViewPropertyAnimator(duration: animated ? 0.5 : 0.0, dampingRatio: 1.0)
         { [self] in
             viewControllerToPresent.view.transform = .identity
             from.view.transform = CGAffineTransform(translationX: -view.bounds.width, y: 0.0)
         }
         animator.addCompletion
         { [weak self] _ in
-            self?.view.isUserInteractionEnabled = true
-            viewControllerToPresent.viewDidAppear(true)
-            from.viewDidDisappear(true)
+            guard let self = self else { return }
+            self.view.isUserInteractionEnabled = true
+            viewControllerToPresent.viewDidAppear(animated)
+            from.viewDidDisappear(animated)
             from.willMove(toParent: nil)
             from.view.removeFromSuperview()
             from.removeFromParent()
             from.didMove(toParent: nil)
-            self?.activeAnimator = nil
+            viewControllerToPresent.didMove(toParent: self)
+            self.activeAnimator = nil
         }
         activeAnimator = animator
         animator.startAnimation()
@@ -185,6 +188,5 @@ public class MSTransitionContainerViewController : UIViewController
             viewController.view.topAnchor.constraint(equalTo: view.topAnchor),
             viewController.view.bottomAnchor.constraint(equalTo: view.bottomAnchor)
         ])
-        viewController.didMove(toParent: self)
     }
 }
