@@ -34,17 +34,8 @@ public class MSTransitionContainerViewController : UIViewController
             return
         }
         trackedChildren.append(viewControllerToPresent)
-        viewControllerToPresent.view.transform = CGAffineTransform(translationX: view.bounds.width, y: 0.0)
-        view.isUserInteractionEnabled = false
-        from.willMove(toParent: nil)
-        let animator = UIViewPropertyAnimator(duration: animated ? 0.5 : 0.0, dampingRatio: 1.0)
-        { [self] in
-            viewControllerToPresent.view.transform = .identity
-            from.view.transform = CGAffineTransform(translationX: -view.bounds.width, y: 0.0)
-        }
-        animator.addCompletion
-        { [weak self] _ in
-            guard let self = self else { return }
+        func finish()
+        {
             self.view.isUserInteractionEnabled = true
             from.view.removeFromSuperview()
             from.removeFromParent()
@@ -52,6 +43,21 @@ public class MSTransitionContainerViewController : UIViewController
             viewControllerToPresent.didMove(toParent: self)
             self.activeAnimator = nil
         }
+        
+        view.isUserInteractionEnabled = false
+        from.willMove(toParent: nil)
+        if !animated
+        {
+            finish()
+            return
+        }
+        viewControllerToPresent.view.transform = CGAffineTransform(translationX: view.bounds.width, y: 0.0)
+        let animator = UIViewPropertyAnimator(duration: animated ? 0.5 : 0.0, dampingRatio: 1.0)
+        { [self] in
+            viewControllerToPresent.view.transform = .identity
+            from.view.transform = CGAffineTransform(translationX: -view.bounds.width, y: 0.0)
+        }
+        animator.addCompletion { _ in finish() }
         activeAnimator = animator
         animator.startAnimation()
     }
