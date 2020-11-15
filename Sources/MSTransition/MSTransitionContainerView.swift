@@ -34,9 +34,9 @@ public class MSTransitionContainerViewController : UIViewController
             return
         }
         trackedChildren.append(viewControllerToPresent)
-        viewControllerToPresent.viewWillAppear(animated)
         viewControllerToPresent.view.transform = CGAffineTransform(translationX: view.bounds.width, y: 0.0)
         view.isUserInteractionEnabled = false
+        from.willMove(toParent: nil)
         let animator = UIViewPropertyAnimator(duration: animated ? 0.5 : 0.0, dampingRatio: 1.0)
         { [self] in
             viewControllerToPresent.view.transform = .identity
@@ -46,9 +46,6 @@ public class MSTransitionContainerViewController : UIViewController
         { [weak self] _ in
             guard let self = self else { return }
             self.view.isUserInteractionEnabled = true
-            viewControllerToPresent.viewDidAppear(animated)
-            from.viewDidDisappear(animated)
-            from.willMove(toParent: nil)
             from.view.removeFromSuperview()
             from.removeFromParent()
             from.didMove(toParent: nil)
