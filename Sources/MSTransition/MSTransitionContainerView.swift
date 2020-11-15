@@ -29,8 +29,6 @@ public class MSTransitionContainerViewController : UIViewController
         
         guard let from = trackedChildren.last else
         {
-            viewControllerToPresent.viewWillAppear(false)
-            viewControllerToPresent.viewDidAppear(false)
             trackedChildren = [viewControllerToPresent]
             viewControllerToPresent.didMove(toParent: self)
             return
