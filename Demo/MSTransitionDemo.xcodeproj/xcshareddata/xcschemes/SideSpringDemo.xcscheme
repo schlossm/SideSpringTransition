@@ -15,9 +15,9 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "10BB21801E2AA239003AC0DA"
-               BuildableName = "SideSpringDemo.app"
-               BlueprintName = "SideSpringDemo"
-               ReferencedContainer = "container:SideSpringDemo.xcodeproj">
+               BuildableName = "MSTransitionDemo.app"
+               BlueprintName = "MSTransitionDemo"
+               ReferencedContainer = "container:MStransitionDemo.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
       </BuildActionEntries>
@@ -31,9 +31,9 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "10BB21801E2AA239003AC0DA"
-            BuildableName = "SideSpringDemo.app"
-            BlueprintName = "SideSpringDemo"
-            ReferencedContainer = "container:SideSpringDemo.xcodeproj">
+            BuildableName = "MSTransitionDemo.app"
+            BlueprintName = "MSTransitionDemo"
+            ReferencedContainer = "container:MStransitionDemo.xcodeproj">
          </BuildableReference>
       </MacroExpansion>
       <Testables>
@@ -54,9 +54,9 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "10BB21801E2AA239003AC0DA"
-            BuildableName = "SideSpringDemo.app"
-            BlueprintName = "SideSpringDemo"
-            ReferencedContainer = "container:SideSpringDemo.xcodeproj">
+            BuildableName = "MSTransitionDemo.app"
+            BlueprintName = "MSTransitionDemo"
+            ReferencedContainer = "container:MStransitionDemo.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
    </LaunchAction>
@@ -71,9 +71,9 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "10BB21801E2AA239003AC0DA"
-            BuildableName = "SideSpringDemo.app"
-            BlueprintName = "SideSpringDemo"
-            ReferencedContainer = "container:SideSpringDemo.xcodeproj">
+            BuildableName = "MSTransitionDemo.app"
+            BlueprintName = "MSTransitionDemo"
+            ReferencedContainer = "container:MStransitionDemo.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
    </ProfileAction>
