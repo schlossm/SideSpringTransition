@@ -11,8 +11,17 @@ import MSTransition
 
 class SecondViewController : UIViewController
 {
+    private var stopBackSwipe = false
+    override var preferredScreenEdgesDeferringSystemGestures: UIRectEdge { stopBackSwipe ? .left : [] }
+    
     @IBAction private func dismiss()
     {
         (parent as? MSTransitionContainerViewController)?.dismiss()
+    }
+    
+    @IBAction private func toggleStopBackSwipe(_ sender: UISwitch)
+    {
+        stopBackSwipe = !sender.isOn
+        setNeedsUpdateOfScreenEdgesDeferringSystemGestures()
     }
 }

@@ -40,27 +40,29 @@ open class MSIntermediateVC: MSInitialVC
 }
 
 #if os(iOS)
-    extension MSIntermediateVC : ForceTouchDelegate
+@available(iOS, deprecated: 13.0, message: "Use MSTransitionContainerViewController instead")
+@available(tvOS, deprecated: 13.0, message: "Use MSTransitionContainerViewController instead")
+extension MSIntermediateVC : ForceTouchDelegate
+{
+    @objc func dismiss(edgePan: UIScreenEdgePanGestureRecognizer)
     {
-        @objc func dismiss(edgePan: UIScreenEdgePanGestureRecognizer)
-        {
-            guard edgePan.state == .began else { return }
-            
-            MSTransitionController.default.wantsInteractiveStart = true
-            dismiss(animated: true, completion: nil)
-        }
+        guard edgePan.state == .began else { return }
         
-        func addEdgePan()
-        {
-            if let edge = self.edgePan
-            {
-                view.removeGestureRecognizer(edge)
-            }
-            let edgePan = UIScreenEdgePanGestureRecognizer(target: self, action: #selector(dismiss(edgePan:)))
-            edgePan.edges = .left
-            view.addGestureRecognizer(edgePan)
-            dismissAnimationController?.panGestureRecognizer = edgePan
-            self.edgePan = edgePan
-        }
+        MSTransitionController.default.wantsInteractiveStart = true
+        dismiss(animated: true, completion: nil)
     }
+    
+    func addEdgePan()
+    {
+        if let edge = self.edgePan
+        {
+            view.removeGestureRecognizer(edge)
+        }
+        let edgePan = UIScreenEdgePanGestureRecognizer(target: self, action: #selector(dismiss(edgePan:)))
+        edgePan.edges = .left
+        view.addGestureRecognizer(edgePan)
+        dismissAnimationController?.panGestureRecognizer = edgePan
+        self.edgePan = edgePan
+    }
+}
 #endif

@@ -10,6 +10,8 @@ import UIKit
 
 public let HapticFeedbackDefault = "HapticFeedback"
 
+@available(iOS, deprecated: 13.0, message: "Use MSTransitionContainerViewController instead")
+@available(tvOS, deprecated: 13.0, message: "Use MSTransitionContainerViewController instead")
 protocol ForceTouchDelegate
 {
     func addEdgePan()
@@ -17,17 +19,23 @@ protocol ForceTouchDelegate
 
 public extension UIViewController
 {
+    @available(iOS, deprecated: 13.0, message: "Use MSTransitionContainerViewController instead")
+    @available(tvOS, deprecated: 13.0, message: "Use MSTransitionContainerViewController instead")
     var dismissAnimationController : SSTDismissalTransition?
     {
         return transitioningDelegate?.animationController?(forDismissed: self) as? InteractableTransition
     }
 }
 
+@available(iOS, deprecated: 13.0, message: "Use MSTransitionContainerViewController instead")
+@available(tvOS, deprecated: 13.0, message: "Use MSTransitionContainerViewController instead")
 protocol LoadingIndicatorMoveable
 {
     var loadingIndicatorPosition : CGPoint { get }
 }
 
+@available(iOS, deprecated: 13.0, message: "Use MSTransitionContainerViewController instead")
+@available(tvOS, deprecated: 13.0, message: "Use MSTransitionContainerViewController instead")
 public protocol SSTDismissalTransition : UIViewControllerAnimatedTransitioning, UIViewControllerInteractiveTransitioning
 {
     var willBeginInteractively : Bool { get set }
@@ -37,6 +45,8 @@ public protocol SSTDismissalTransition : UIViewControllerAnimatedTransitioning, 
     #endif
 }
 
+@available(iOS, deprecated: 13.0, message: "Use MSTransitionContainerViewController instead")
+@available(tvOS, deprecated: 13.0, message: "Use MSTransitionContainerViewController instead")
 public protocol SSTController
 {
     static var `default` : SSTController { get }
@@ -83,6 +93,8 @@ public final class MSTransitionController : SSTController
     private init() { }
 }
 
+@available(iOS, deprecated: 13.0, message: "Use MSTransitionContainerViewController instead")
+@available(tvOS, deprecated: 13.0, message: "Use MSTransitionContainerViewController instead")
 private class NonInteractableTransition: NSObject, UIViewControllerAnimatedTransitioning
 {
     var isReversed = false
@@ -136,6 +148,8 @@ private class NonInteractableTransition: NSObject, UIViewControllerAnimatedTrans
     }
 }
 
+@available(iOS, deprecated: 13.0, message: "Use MSTransitionContainerViewController instead")
+@available(tvOS, deprecated: 13.0, message: "Use MSTransitionContainerViewController instead")
 private class InteractableTransition: NSObject, SSTDismissalTransition
 {
     fileprivate var transitionDriver = TransitionDriver()
@@ -146,6 +160,8 @@ private class InteractableTransition: NSObject, SSTDismissalTransition
     #endif
 }
 
+@available(iOS, deprecated: 13.0, message: "Use MSTransitionContainerViewController instead")
+@available(tvOS, deprecated: 13.0, message: "Use MSTransitionContainerViewController instead")
 extension InteractableTransition
 {
     public func transitionDuration(using transitionContext: UIViewControllerContextTransitioning?) -> TimeInterval
@@ -161,6 +177,8 @@ extension InteractableTransition
     }
 }
 
+@available(iOS, deprecated: 13.0, message: "Use MSTransitionContainerViewController instead")
+@available(tvOS, deprecated: 13.0, message: "Use MSTransitionContainerViewController instead")
 extension InteractableTransition
 {
     public func startInteractiveTransition(_ transitionContext: UIViewControllerContextTransitioning)
@@ -182,6 +200,8 @@ extension InteractableTransition
     }
 }
 
+@available(iOS, deprecated: 13.0, message: "Use MSTransitionContainerViewController instead")
+@available(tvOS, deprecated: 13.0, message: "Use MSTransitionContainerViewController instead")
 class TransitionDriver
 {
     let transitionAnimator : UIViewPropertyAnimator = UIViewPropertyAnimator(duration: 0.5, dampingRatio: 1.0, animations: nil)

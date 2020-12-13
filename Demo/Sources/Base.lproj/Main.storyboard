@@ -1,10 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="17503.1" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="x8K-dF-gyd">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="17506" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="x8K-dF-gyd">
     <device id="retina4_7" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="17502"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="17505"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="Stack View standard spacing" minToolsVersion="9.0"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -12,7 +13,7 @@
         <!--Flow Controller-->
         <scene sceneID="Uhh-12-5lL">
             <objects>
-                <viewController id="x8K-dF-gyd" customClass="FlowController" customModule="SideSpringDemo" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="x8K-dF-gyd" customClass="FlowController" customModule="MSTransitionDemo" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="aGy-Q1-Vl4">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -27,7 +28,7 @@
         <!--View Controller-->
         <scene sceneID="tne-QT-ifu">
             <objects>
-                <viewController storyboardIdentifier="first" id="BYZ-38-t0r" customClass="ViewController" customModule="SideSpringDemo" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="first" id="BYZ-38-t0r" customClass="ViewController" customModule="MSTransitionDemo" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="P6x-O4-avx"/>
                         <viewControllerLayoutGuide type="bottom" id="7hC-lc-UUn"/>
@@ -67,7 +68,7 @@
         <!--Second View Controller-->
         <scene sceneID="hG1-fD-xHN">
             <objects>
-                <viewController storyboardIdentifier="second" id="zXi-1q-NGy" customClass="SecondViewController" customModule="SideSpringDemo" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="second" id="zXi-1q-NGy" customClass="SecondViewController" customModule="MSTransitionDemo" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="lzH-z5-XQd"/>
                         <viewControllerLayoutGuide type="bottom" id="JhQ-C3-6r4"/>
@@ -76,27 +77,52 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="KG2-EX-pi4">
-                                <rect key="frame" x="170.5" y="360" width="34" height="30"/>
-                                <state key="normal" title="Back"/>
-                                <connections>
-                                    <action selector="dismiss" destination="zXi-1q-NGy" eventType="touchUpInside" id="Xuo-qm-9PH"/>
-                                </connections>
-                            </button>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Page Two" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="9nH-is-qzW">
-                                <rect key="frame" x="150.5" y="323" width="74" height="21"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                <nil key="textColor"/>
-                                <nil key="highlightedColor"/>
-                            </label>
+                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="center" spacing="32" translatesAutoresizingMaskIntoConstraints="NO" id="Vuv-k8-zhW">
+                                <rect key="frame" x="90" y="258.5" width="195" height="150"/>
+                                <subviews>
+                                    <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="center" spacingType="standard" translatesAutoresizingMaskIntoConstraints="NO" id="mpc-hn-pBn">
+                                        <rect key="frame" x="60.5" y="0.0" width="74" height="58.5"/>
+                                        <subviews>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Page Two" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="9nH-is-qzW">
+                                                <rect key="frame" x="0.0" y="0.0" width="74" height="20.5"/>
+                                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                <nil key="textColor"/>
+                                                <nil key="highlightedColor"/>
+                                            </label>
+                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="KG2-EX-pi4">
+                                                <rect key="frame" x="20" y="28.5" width="34" height="30"/>
+                                                <state key="normal" title="Back"/>
+                                                <connections>
+                                                    <action selector="dismiss" destination="zXi-1q-NGy" eventType="touchUpInside" id="Xuo-qm-9PH"/>
+                                                </connections>
+                                            </button>
+                                        </subviews>
+                                    </stackView>
+                                    <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="center" spacingType="standard" translatesAutoresizingMaskIntoConstraints="NO" id="Bw5-Dq-c1S">
+                                        <rect key="frame" x="0.0" y="90.5" width="195" height="59.5"/>
+                                        <subviews>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Allow back-swipe gesture" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="3R2-pa-h0o">
+                                                <rect key="frame" x="0.0" y="0.0" width="195" height="20.5"/>
+                                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                <nil key="textColor"/>
+                                                <nil key="highlightedColor"/>
+                                            </label>
+                                            <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" on="YES" translatesAutoresizingMaskIntoConstraints="NO" id="0nn-44-hUj">
+                                                <rect key="frame" x="73" y="28.5" width="51" height="31"/>
+                                                <connections>
+                                                    <action selector="toggleStopBackSwipe:" destination="zXi-1q-NGy" eventType="valueChanged" id="6vV-qQ-lT0"/>
+                                                </connections>
+                                            </switch>
+                                        </subviews>
+                                    </stackView>
+                                </subviews>
+                            </stackView>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="xql-y0-zK9"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
-                            <constraint firstItem="KG2-EX-pi4" firstAttribute="centerX" secondItem="9nH-is-qzW" secondAttribute="centerX" id="38o-OW-xIC"/>
-                            <constraint firstItem="9nH-is-qzW" firstAttribute="centerX" secondItem="iHS-aE-a8F" secondAttribute="centerX" id="QsS-CZ-KY3"/>
-                            <constraint firstItem="9nH-is-qzW" firstAttribute="centerY" secondItem="iHS-aE-a8F" secondAttribute="centerY" id="Qvl-qw-cHa"/>
-                            <constraint firstItem="KG2-EX-pi4" firstAttribute="top" secondItem="9nH-is-qzW" secondAttribute="bottom" constant="16" id="oCy-7u-Na3"/>
+                            <constraint firstItem="Vuv-k8-zhW" firstAttribute="centerY" secondItem="xql-y0-zK9" secondAttribute="centerY" id="RD9-xD-ERg"/>
+                            <constraint firstItem="Vuv-k8-zhW" firstAttribute="centerX" secondItem="xql-y0-zK9" secondAttribute="centerX" id="ubL-nl-SEx"/>
                         </constraints>
                     </view>
                 </viewController>

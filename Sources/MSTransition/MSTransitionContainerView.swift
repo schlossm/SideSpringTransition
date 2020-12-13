@@ -24,6 +24,10 @@ public class MSTransitionContainerViewController : UIViewController
         {
             yield &_trackedChildren
             screenEdgeGesture.isEnabled = _trackedChildren.count > 1
+            if let vc = _trackedChildren.last, vc.preferredScreenEdgesDeferringSystemGestures.contains(.left)
+            {
+                screenEdgeGesture.isEnabled = false
+            }
         }
         set { _trackedChildren = newValue }
     }
@@ -31,9 +35,20 @@ public class MSTransitionContainerViewController : UIViewController
     private var screenEdgeGesture = UIScreenEdgePanGestureRecognizer()
     private var activeAnimator : UIViewPropertyAnimator?
     
-    public override var shouldAutomaticallyForwardAppearanceMethods: Bool { false }
+    public override var shouldAutomaticallyForwardAppearanceMethods : Bool { false }
     
-    override public func viewDidLoad() {
+    public override func setNeedsUpdateOfScreenEdgesDeferringSystemGestures()
+    {
+        super.setNeedsUpdateOfScreenEdgesDeferringSystemGestures()
+        screenEdgeGesture.isEnabled = _trackedChildren.count > 1
+        if let vc = _trackedChildren.last, vc.preferredScreenEdgesDeferringSystemGestures.contains(.left)
+        {
+            screenEdgeGesture.isEnabled = false
+        }
+    }
+    
+    override public func viewDidLoad()
+    {
         super.viewDidLoad()
         screenEdgeGesture.edges = [.left]
         screenEdgeGesture.addTarget(self, action: #selector(handleSwipe(gesture:)))
@@ -94,6 +109,12 @@ public class MSTransitionContainerViewController : UIViewController
         animator.startAnimation()
     }
     
+    @available(*, unavailable)
+    public override func dismiss(animated flag: Bool, completion: (() -> Void)? = nil)
+    {
+        super.dismiss(animated: flag, completion: completion)
+    }
+    
     /**
      Dismisses a provided view controller
      
@@ -144,28 +165,34 @@ public class MSTransitionContainerViewController : UIViewController
                 return trackedChildren.endIndex - 2
             }
         }()
+        
         let to = trackedChildren[index]
         addToContainer(to)
         to.beginAppearanceTransition(true, animated: animated)
         current.beginAppearanceTransition(false, animated: animated)
-        if !animated
+        func finish()
         {
             current.endAppearanceTransition()
             to.endAppearanceTransition()
-            trackedChildren = Array(trackedChildren[0...index])
+            trackedChildren.removeLast(trackedChildren.count - index)
+        }
+        
+        if !animated
+        {
+            finish()
             return
         }
         
+        view.isUserInteractionEnabled = false
         to.view.transform = CGAffineTransform(translationX: -view.bounds.width, y: 0.0)
         animator.addAnimations { to.view.transform = .identity }
         animator.addCompletion
         { [self] in
+            view.isUserInteractionEnabled = true
             switch $0
             {
             case .end:
-                current.endAppearanceTransition()
-                to.endAppearanceTransition()
-                trackedChildren = Array(trackedChildren[0...index])
+                finish()
                 
             case .start:
                 current.beginAppearanceTransition(true, animated: animated)
@@ -182,32 +209,36 @@ public class MSTransitionContainerViewController : UIViewController
     
     @objc private func handleSwipe(gesture: UIScreenEdgePanGestureRecognizer)
     {
+        let velocityX = gesture.velocity(in: view).x
+        let locationX = gesture.translation(in: view).x
+        func finishAnimation(reversed: Bool)
+        {
+            let initialAnimationVelocity = self.initialAnimationVelocity(for: CGPoint(x: velocityX, y: 0), from: CGPoint(x: locationX, y: 0), to: CGPoint(x: reversed ? 0 : view.frame.width, y: 0))
+            activeAnimator?.isReversed = reversed
+            activeAnimator?.continueAnimation(withTimingParameters: UISpringTimingParameters(dampingRatio: 1.0, initialVelocity: initialAnimationVelocity), durationFactor: 0)
+        }
         switch gesture.state
         {
         case .began:
             dismiss()
             activeAnimator?.pauseAnimation()
-            let locationX = gesture.translation(in: view).x
             activeAnimator?.fractionComplete = locationX / view.bounds.width
             
         case .changed:
-            let locationX = gesture.translation(in: view).x
             activeAnimator?.fractionComplete = locationX / view.bounds.width
             
         case .ended:
-            let velocityX = gesture.velocity(in: view).x
-            let locationX = gesture.translation(in: view).x
+            gesture.isEnabled = false
             switch locationX
             {
-            case 0 ..< view.bounds.width / 2.0:
+            case -.infinity ... view.bounds.width / 2.0:
                 switch velocityX
                 {
                 case 100 ..< .infinity:
-                    activeAnimator?.continueAnimation(withTimingParameters: nil, durationFactor: activeAnimator!.fractionComplete)
+                    finishAnimation(reversed: false)
                     
                 case -.infinity ..< 100:
-                    activeAnimator?.isReversed = true
-                    activeAnimator?.continueAnimation(withTimingParameters: nil, durationFactor: activeAnimator!.fractionComplete)
+                    finishAnimation(reversed: true)
                     
                 default: fatalError()
                 }
@@ -216,24 +247,37 @@ public class MSTransitionContainerViewController : UIViewController
                 switch velocityX
                 {
                 case -100 ..< .infinity:
-                    activeAnimator?.continueAnimation(withTimingParameters: nil, durationFactor: activeAnimator!.fractionComplete)
+                    finishAnimation(reversed: false)
                     
                 case -.infinity ..< -100:
-                    activeAnimator?.isReversed = true
-                    activeAnimator?.continueAnimation(withTimingParameters: nil, durationFactor: activeAnimator!.fractionComplete)
+                    finishAnimation(reversed: true)
                     
                 default: fatalError()
                 }
                 
-            default: fatalError()
+            default:
+                finishAnimation(reversed: true)
             }
             
-        case .cancelled:
-            activeAnimator?.isReversed = true
-            activeAnimator?.continueAnimation(withTimingParameters: nil, durationFactor: activeAnimator!.fractionComplete)
-            
-        default: break
+        default:
+            finishAnimation(reversed: true)
         }
+    }
+    
+    func initialAnimationVelocity(for gestureVelocity: CGPoint, from currentPosition: CGPoint, to finalPosition: CGPoint) -> CGVector
+    {
+        var animationVelocity = CGVector.zero
+        let xDistance = finalPosition.x - currentPosition.x
+        let yDistance = finalPosition.y - currentPosition.y
+        if xDistance != 0
+        {
+            animationVelocity.dx = gestureVelocity.x / xDistance
+        }
+        if yDistance != 0
+        {
+            animationVelocity.dy = gestureVelocity.y / yDistance
+        }
+        return animationVelocity
     }
     
     private func addToContainer(_ viewController: UIViewController)
