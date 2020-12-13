@@ -174,7 +174,7 @@ public class MSTransitionContainerViewController : UIViewController
         {
             current.endAppearanceTransition()
             to.endAppearanceTransition()
-            trackedChildren.removeLast(trackedChildren.count - index)
+            trackedChildren.removeLast(trackedChildren.count - (index + 1))
         }
         
         if !animated
