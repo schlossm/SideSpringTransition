@@ -22,7 +22,7 @@ class MSTransitionContainerViewTests : XCTestCase
         container.view.frame = CGRect(x: 0.0, y: 0.0, width: 414.0, height: 896.0)
         
         let viewController = UIViewController()
-        container.present(viewController)
+        container.present(viewController, animated: false)
         XCTAssertEqual(container.children, [viewController])
         XCTAssertEqual(container.trackedChildren, [viewController])
     }
@@ -33,11 +33,11 @@ class MSTransitionContainerViewTests : XCTestCase
         container.view.frame = CGRect(x: 0.0, y: 0.0, width: 414.0, height: 896.0)
         
         let viewController = UIViewController()
-        container.present(viewController)
+        container.present(viewController, animated: false)
         XCTAssertFalse(container.screenEdgeGesture.isEnabled)
         
         let nextVC = ScreenEdgeVC()
-        container.present(nextVC)
+        container.present(nextVC, animated: false)
         XCTAssertFalse(container.screenEdgeGesture.isEnabled)
     }
     
@@ -46,18 +46,39 @@ class MSTransitionContainerViewTests : XCTestCase
         let container = MSTransitionContainerViewController()
         container.view.frame = CGRect(x: 0.0, y: 0.0, width: 414.0, height: 896.0)
         
+        let expectation = self.expectation(description: "de-init")
         let viewController = UIViewController()
-        container.present(viewController)
-        
-        let vc2 = UIViewController()
-        container.present(vc2)
+        container.present(viewController, animated: false)
+        container.present(TrackedVC(expectation: expectation), animated: false)
         container.dismiss(animated: false)
         XCTAssertEqual(container.children, [viewController])
         XCTAssertEqual(container.trackedChildren, [viewController])
+        wait(for: [expectation], timeout: 1.0)
     }
 }
 
 private class ScreenEdgeVC : UIViewController
 {
     override var preferredScreenEdgesDeferringSystemGestures: UIRectEdge { .left }
+}
+
+class TrackedVC : UIViewController
+{
+    let expectation: XCTestExpectation
+    
+    init(expectation: XCTestExpectation)
+    {
+        self.expectation = expectation
+        super.init(nibName: nil, bundle: nil)
+    }
+    
+    required init?(coder: NSCoder)
+    {
+        fatalError()
+    }
+    
+    deinit
+    {
+        expectation.fulfill()
+    }
 }

@@ -68,46 +68,49 @@ public class MSTransitionContainerViewController : UIViewController
      */
     public func present(_ viewControllerToPresent: UIViewController, animated: Bool = true)
     {
-        viewControllerToPresent.beginAppearanceTransition(true, animated: trackedChildren.isEmpty ? false : animated)
-        addToContainer(viewControllerToPresent)
-        
-        guard let from = trackedChildren.last else
+        autoreleasepool
         {
-            trackedChildren = [viewControllerToPresent]
-            setNeedsUpdateOfScreenEdgesDeferringSystemGestures()
-            viewControllerToPresent.didMove(toParent: self)
-            viewControllerToPresent.endAppearanceTransition()
-            return
+            viewControllerToPresent.beginAppearanceTransition(true, animated: trackedChildren.isEmpty ? false : animated)
+            addToContainer(viewControllerToPresent)
+            
+            guard let from = trackedChildren.last else
+            {
+                trackedChildren = [viewControllerToPresent]
+                setNeedsUpdateOfScreenEdgesDeferringSystemGestures()
+                viewControllerToPresent.didMove(toParent: self)
+                viewControllerToPresent.endAppearanceTransition()
+                return
+            }
+            trackedChildren.append(viewControllerToPresent)
+            func finish()
+            {
+                self.view.isUserInteractionEnabled = true
+                from.view.removeFromSuperview()
+                from.removeFromParent()
+                from.endAppearanceTransition()
+                viewControllerToPresent.endAppearanceTransition()
+                viewControllerToPresent.didMove(toParent: self)
+                activeAnimator = nil
+            }
+            
+            from.beginAppearanceTransition(false, animated: animated)
+            view.isUserInteractionEnabled = false
+            from.willMove(toParent: nil)
+            if !animated
+            {
+                finish()
+                return
+            }
+            viewControllerToPresent.view.transform = CGAffineTransform(translationX: view.bounds.width, y: 0.0)
+            let animator = UIViewPropertyAnimator(duration: animated ? 0.5 : 0.0, dampingRatio: 1.0)
+            { [self] in
+                viewControllerToPresent.view.transform = .identity
+                from.view.transform = CGAffineTransform(translationX: -view.bounds.width, y: 0.0)
+            }
+            animator.addCompletion { _ in finish() }
+            activeAnimator = animator
+            animator.startAnimation()
         }
-        trackedChildren.append(viewControllerToPresent)
-        func finish()
-        {
-            self.view.isUserInteractionEnabled = true
-            from.view.removeFromSuperview()
-            from.removeFromParent()
-            from.endAppearanceTransition()
-            viewControllerToPresent.endAppearanceTransition()
-            viewControllerToPresent.didMove(toParent: self)
-            self.activeAnimator = nil
-        }
-        
-        from.beginAppearanceTransition(false, animated: animated)
-        view.isUserInteractionEnabled = false
-        from.willMove(toParent: nil)
-        if !animated
-        {
-            finish()
-            return
-        }
-        viewControllerToPresent.view.transform = CGAffineTransform(translationX: view.bounds.width, y: 0.0)
-        let animator = UIViewPropertyAnimator(duration: animated ? 0.5 : 0.0, dampingRatio: 1.0)
-        { [self] in
-            viewControllerToPresent.view.transform = .identity
-            from.view.transform = CGAffineTransform(translationX: -view.bounds.width, y: 0.0)
-        }
-        animator.addCompletion { _ in finish() }
-        activeAnimator = animator
-        animator.startAnimation()
     }
     
     @available(*, unavailable)
@@ -132,81 +135,84 @@ public class MSTransitionContainerViewController : UIViewController
      */
     public func dismiss(viewController: UIViewController? = nil, animated: Bool = true)
     {
-        guard trackedChildren.count > 1 else { return }
-        guard viewController != trackedChildren.first else
-        {
-            if let vc = viewController
+        autoreleasepool {
+            guard trackedChildren.count > 1 else { return }
+            guard viewController != trackedChildren.first else
             {
-                withVaList([vc]) { NSException.raise(.invalidArgumentException, format: "Cannot dismiss %@, which is the top view controller in this container", arguments: $0) }
-            }
-            else
-            {
-                NSException(name: .invalidArgumentException, reason: "Cannot dismiss the top view controller in this container", userInfo: nil).raise()
-            }
-            return
-        }
-        if let vc = viewController
-        {
-            guard trackedChildren.contains(vc) else
-            {
-                withVaList([vc]) { NSException.raise(.invalidArgumentException, format: "Cannot dismiss %@, which is not in the container hierarchy", arguments: $0) }
+                if let vc = viewController
+                {
+                    withVaList([vc]) { NSException.raise(.invalidArgumentException, format: "Cannot dismiss %@, which is the top view controller in this container", arguments: $0) }
+                }
+                else
+                {
+                    NSException(name: .invalidArgumentException, reason: "Cannot dismiss the top view controller in this container", userInfo: nil).raise()
+                }
                 return
             }
-        }
-        let current = trackedChildren.last!
-        let animator = UIViewPropertyAnimator(duration: 0.5, dampingRatio: 1.0) { [self] in current.view.transform = .init(translationX: view.bounds.width, y: 0.0) }
-        
-        let index: Int = {
             if let vc = viewController
             {
-                return trackedChildren.index(before: trackedChildren.firstIndex(of: vc)!)
+                guard trackedChildren.contains(vc) else
+                {
+                    withVaList([vc]) { NSException.raise(.invalidArgumentException, format: "Cannot dismiss %@, which is not in the container hierarchy", arguments: $0) }
+                    return
+                }
             }
-            else
+            let current = trackedChildren.last!
+            
+            let index: Int = {
+                if let vc = viewController
+                {
+                    return trackedChildren.index(before: trackedChildren.firstIndex(of: vc)!)
+                }
+                else
+                {
+                    return trackedChildren.endIndex - 2
+                }
+            }()
+            
+            let to = trackedChildren[index]
+            addToContainer(to)
+            to.beginAppearanceTransition(true, animated: animated)
+            current.beginAppearanceTransition(false, animated: animated)
+            func finish()
             {
-                return trackedChildren.endIndex - 2
-            }
-        }()
-        
-        let to = trackedChildren[index]
-        addToContainer(to)
-        to.beginAppearanceTransition(true, animated: animated)
-        current.beginAppearanceTransition(false, animated: animated)
-        func finish()
-        {
-            current.endAppearanceTransition()
-            to.endAppearanceTransition()
-            trackedChildren.removeLast(trackedChildren.count - (index + 1))
-            trackedChildren[index..<trackedChildren.count].forEach { $0.removeFromParent() }
-        }
-        
-        if !animated
-        {
-            finish()
-            return
-        }
-        
-        view.isUserInteractionEnabled = false
-        to.view.transform = CGAffineTransform(translationX: -view.bounds.width, y: 0.0)
-        animator.addAnimations { to.view.transform = .identity }
-        animator.addCompletion
-        { [self] in
-            view.isUserInteractionEnabled = true
-            switch $0
-            {
-            case .end:
-                finish()
-                
-            case .start:
-                current.beginAppearanceTransition(true, animated: animated)
-                to.beginAppearanceTransition(false, animated: animated)
                 current.endAppearanceTransition()
                 to.endAppearanceTransition()
-                
-            default: break
+                trackedChildren[index + 1..<trackedChildren.count].forEach { $0.removeFromParent() }
+                trackedChildren.removeLast(trackedChildren.count - (index + 1))
+                activeAnimator = nil
             }
+            
+            if !animated
+            {
+                finish()
+                return
+            }
+            
+            let animator = UIViewPropertyAnimator(duration: 0.5, dampingRatio: 1.0) { [self] in current.view.transform = .init(translationX: view.bounds.width, y: 0.0) }
+            view.isUserInteractionEnabled = false
+            to.view.transform = CGAffineTransform(translationX: -view.bounds.width, y: 0.0)
+            animator.addAnimations { to.view.transform = .identity }
+            animator.addCompletion
+            { [self] in
+                view.isUserInteractionEnabled = true
+                switch $0
+                {
+                case .end:
+                    finish()
+                    
+                case .start:
+                    current.beginAppearanceTransition(true, animated: animated)
+                    to.beginAppearanceTransition(false, animated: animated)
+                    current.endAppearanceTransition()
+                    to.endAppearanceTransition()
+                    
+                default: break
+                }
+            }
+            activeAnimator = animator
+            animator.startAnimation()
         }
-        activeAnimator = animator
-        animator.startAnimation()
     }
     
     @objc private func handleSwipe(gesture: UIScreenEdgePanGestureRecognizer)
