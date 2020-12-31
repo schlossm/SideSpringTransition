@@ -17,7 +17,7 @@ public class MSTransitionContainerViewController : UIViewController
 {
     // Order preserved
     private var _trackedChildren = [UIViewController]()
-    private var trackedChildren: [UIViewController]
+    var trackedChildren: [UIViewController]
     {
         get { _trackedChildren }
         _modify
@@ -32,7 +32,7 @@ public class MSTransitionContainerViewController : UIViewController
         set { _trackedChildren = newValue }
     }
     
-    private var screenEdgeGesture = UIScreenEdgePanGestureRecognizer()
+    var screenEdgeGesture = UIScreenEdgePanGestureRecognizer()
     private var activeAnimator : UIViewPropertyAnimator?
     
     public override var shouldAutomaticallyForwardAppearanceMethods : Bool { false }
@@ -74,6 +74,7 @@ public class MSTransitionContainerViewController : UIViewController
         guard let from = trackedChildren.last else
         {
             trackedChildren = [viewControllerToPresent]
+            setNeedsUpdateOfScreenEdgesDeferringSystemGestures()
             viewControllerToPresent.didMove(toParent: self)
             viewControllerToPresent.endAppearanceTransition()
             return
@@ -175,6 +176,7 @@ public class MSTransitionContainerViewController : UIViewController
             current.endAppearanceTransition()
             to.endAppearanceTransition()
             trackedChildren.removeLast(trackedChildren.count - (index + 1))
+            trackedChildren[index..<trackedChildren.count].forEach { $0.removeFromParent() }
         }
         
         if !animated

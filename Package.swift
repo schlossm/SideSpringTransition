@@ -14,6 +14,8 @@ let package = Package(
     targets: [
         .target(
             name: "MSTransition",
-            dependencies: [])
+            dependencies: []),
+        .testTarget(name: "MSTransitionTests",
+                    dependencies: ["MSTransition"])
     ]
 )
