@@ -23,20 +23,24 @@ public class MSTransitionContainerViewController : UIViewController
         _modify
         {
             yield &_trackedChildren
+#if !os(tvOS)
             screenEdgeGesture.isEnabled = _trackedChildren.count > 1
             if let vc = _trackedChildren.last, vc.preferredScreenEdgesDeferringSystemGestures.contains(.left)
             {
                 screenEdgeGesture.isEnabled = false
             }
+#endif
         }
         set { _trackedChildren = newValue }
     }
-    
+
+    @available(tvOS, unavailable)
     var screenEdgeGesture = UIScreenEdgePanGestureRecognizer()
     private var activeAnimator : UIViewPropertyAnimator?
     
     public override var shouldAutomaticallyForwardAppearanceMethods : Bool { false }
-    
+
+    #if !os(tvOS)
     public override func setNeedsUpdateOfScreenEdgesDeferringSystemGestures()
     {
         super.setNeedsUpdateOfScreenEdgesDeferringSystemGestures()
@@ -46,13 +50,16 @@ public class MSTransitionContainerViewController : UIViewController
             screenEdgeGesture.isEnabled = false
         }
     }
+    #endif
     
     override public func viewDidLoad()
     {
         super.viewDidLoad()
+        #if !os(tvOS)
         screenEdgeGesture.edges = [.left]
         screenEdgeGesture.addTarget(self, action: #selector(handleSwipe(gesture:)))
         view.addGestureRecognizer(screenEdgeGesture)
+        #endif
     }
     
     /**
@@ -76,7 +83,9 @@ public class MSTransitionContainerViewController : UIViewController
             guard let from = trackedChildren.last else
             {
                 trackedChildren = [viewControllerToPresent]
+                #if !os(tvOS)
                 setNeedsUpdateOfScreenEdgesDeferringSystemGestures()
+                #endif
                 viewControllerToPresent.didMove(toParent: self)
                 viewControllerToPresent.endAppearanceTransition()
                 return
@@ -218,7 +227,8 @@ public class MSTransitionContainerViewController : UIViewController
             animator.startAnimation()
         }
     }
-    
+
+    @available(tvOS, unavailable)
     @objc private func handleSwipe(gesture: UIScreenEdgePanGestureRecognizer)
     {
         let velocityX = gesture.velocity(in: view).x

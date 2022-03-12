@@ -10,11 +10,18 @@ import XCTest
 
 class MSTransitionContainerViewTests : XCTestCase
 {
+#if os(tvOS)
+    static var allTests = [
+        ("testPresentation", testPresentation),
+        ("testDismiss", testDismiss)
+    ]
+#else
     static var allTests = [
         ("testPresentation", testPresentation),
         ("testDismiss", testDismiss),
         ("testScreenEdge", testScreenEdge)
     ]
+#endif
     
     func testPresentation()
     {
@@ -26,7 +33,8 @@ class MSTransitionContainerViewTests : XCTestCase
         XCTAssertEqual(container.children, [viewController])
         XCTAssertEqual(container.trackedChildren, [viewController])
     }
-    
+
+#if !os(tvOS)
     func testScreenEdge()
     {
         let container = MSTransitionContainerViewController()
@@ -40,6 +48,7 @@ class MSTransitionContainerViewTests : XCTestCase
         container.present(nextVC, animated: false)
         XCTAssertFalse(container.screenEdgeGesture.isEnabled)
     }
+#endif
     
     func testDismiss()
     {
@@ -59,7 +68,9 @@ class MSTransitionContainerViewTests : XCTestCase
 
 private class ScreenEdgeVC : UIViewController
 {
+#if !os(tvOS)
     override var preferredScreenEdgesDeferringSystemGestures: UIRectEdge { .left }
+#endif
 }
 
 class TrackedVC : UIViewController
