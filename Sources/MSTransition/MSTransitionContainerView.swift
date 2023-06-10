@@ -34,8 +34,9 @@ public class MSTransitionContainerViewController : UIViewController
         set { _trackedChildren = newValue }
     }
 
-    @available(tvOS, unavailable)
+#if !os(tvOS)
     var screenEdgeGesture = UIScreenEdgePanGestureRecognizer()
+#endif
     private var activeAnimator : UIViewPropertyAnimator?
     
     public override var shouldAutomaticallyForwardAppearanceMethods : Bool { false }
