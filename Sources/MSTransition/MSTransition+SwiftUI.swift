@@ -110,6 +110,7 @@ private class MSTransitionHostingController<U : View, V : UIHostingController<U>
         self.hostingController = hostingController
         var dismissAction : (() -> Void)!
         super.init(rootView: MSTransitionHostingControllerBridge(hostingController: hostingController)
+            .edgesIgnoringSafeArea(.all)
             .environment(\.msTransitionDismiss, .init(dismissAction: { dismissAction() })) as! ModifiedContent<MSTransitionHostingControllerBridge, _EnvironmentKeyWritingModifier<MSTransitionDismissAction>>)
         dismissAction = { container.dismiss(viewController: self, animated: true) }
     }

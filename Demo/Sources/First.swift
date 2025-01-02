@@ -14,13 +14,18 @@ struct First : View
     
     var body : some View
     {
-        VStack(spacing: 16)
+        ZStack
         {
-            Text("Page One")
+            Color.red.edgesIgnoringSafeArea(.all)
             
-            Button("Next")
+            VStack(spacing: 16)
             {
-                flowController?.goToSecondSwiftUIPage()
+                Text("Page One")
+                
+                Button("Next")
+                {
+                    flowController?.goToSecondSwiftUIPage()
+                }
             }
         }
     }
