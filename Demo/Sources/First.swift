@@ -16,7 +16,12 @@ struct First : View
     {
         ZStack
         {
-            Color.red.edgesIgnoringSafeArea(.all)
+            ZStack(alignment: .top)
+            {
+                Color.red.edgesIgnoringSafeArea(.all)
+                
+                Text("Top")
+            }
             
             VStack(spacing: 16)
             {
