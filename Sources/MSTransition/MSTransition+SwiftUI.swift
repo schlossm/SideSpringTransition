@@ -99,7 +99,9 @@ private struct MSTransitionHostingControllerBridge<T : View, U: UIHostingControl
     func updateUIViewController(_ uiViewController: U, context: Context) {}
 }
 
-private class MSTransitionHostingController<U : View, V : UIHostingController<U>> : UIHostingController<ModifiedContent<MSTransitionHostingControllerBridge<U, V>, _EnvironmentKeyWritingModifier<MSTransitionDismissAction>>>
+private typealias MSTransitionHostingControllerContent<U : View, V : UIHostingController<U>> = ModifiedContent<ModifiedContent<MSTransitionHostingControllerBridge<U, V>, _SafeAreaIgnoringLayout>, _EnvironmentKeyWritingModifier<MSTransitionDismissAction>>
+
+private class MSTransitionHostingController<U : View, V : UIHostingController<U>> : UIHostingController<MSTransitionHostingControllerContent<U, V>>
 {
     let hostingController : V
     
@@ -111,7 +113,7 @@ private class MSTransitionHostingController<U : View, V : UIHostingController<U>
         var dismissAction : (() -> Void)!
         super.init(rootView: MSTransitionHostingControllerBridge(hostingController: hostingController)
             .edgesIgnoringSafeArea(.all)
-            .environment(\.msTransitionDismiss, .init(dismissAction: { dismissAction() })) as! ModifiedContent<MSTransitionHostingControllerBridge, _EnvironmentKeyWritingModifier<MSTransitionDismissAction>>)
+            .environment(\.msTransitionDismiss, .init(dismissAction: { dismissAction() })) as! MSTransitionHostingControllerContent<U, V>)
         dismissAction = { container.dismiss(viewController: self, animated: true) }
     }
     
