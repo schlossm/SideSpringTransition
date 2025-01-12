@@ -6,6 +6,7 @@
 //  Copyright © 2024 Michael Schloss. All rights reserved.
 //
 
+import MSTransition
 import SwiftUI
 
 struct First : View

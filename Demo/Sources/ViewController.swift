@@ -13,6 +13,6 @@ class ViewController : UIViewController
 {
     @IBAction private func next()
     {
-        (parent as? MSTransitionContainerViewController)?.present(UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "second"))
+        (parent?.parent as? MSTransitionContainerViewController)?.present(child: UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "second"))
     }
 }

@@ -11,7 +11,7 @@ import MSTransition
 
 struct Second : View
 {
-    @Environment(\.msTransitionDismiss) private var dismiss
+    @Environment(\.dismiss) private var dismiss
     @State private var isBackSwipeOn = true
     
     let flowController : FlowController?
@@ -25,31 +25,41 @@ struct Second : View
         }
         else
         {
-            
+            content
         }
     }
     
     private var content : some View
     {
-        VStack(spacing: 32)
+        ZStack
         {
-            VStack(spacing: 8)
+            ZStack(alignment: .top)
             {
-                Text("Page Two")
+                Color.blue.ignoresSafeArea(.all)
                 
-                Button("Back")
-                {
-                    dismiss()
-                }
+                Text("Top Second")
             }
             
-            if #available(iOS 16.0, *)
+            VStack(spacing: 32)
             {
-                Toggle("Allow back-swipe gesture", isOn: $isBackSwipeOn)
-                    .toggleStyle(.switch)
+                VStack(spacing: 8)
+                {
+                    Text("Page Two")
+                    
+                    Button("Back")
+                    {
+                        dismiss()
+                    }
+                }
+                
+                if #available(iOS 16.0, *)
+                {
+                    Toggle("Allow back-swipe gesture", isOn: $isBackSwipeOn)
+                        .toggleStyle(.switch)
+                }
             }
+            .padding()
         }
-        .padding()
     }
 }
 

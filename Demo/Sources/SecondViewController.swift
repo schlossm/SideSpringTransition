@@ -16,7 +16,7 @@ class SecondViewController : UIViewController
     
     @IBAction private func dismiss()
     {
-        (parent as? MSTransitionContainerViewController)?.dismiss()
+        (parent as? MSTransitionContainerViewController)?.dismiss(child: self)
     }
     
     @IBAction private func toggleStopBackSwipe(_ sender: UISwitch)

@@ -20,6 +20,7 @@ class FlowController : UIViewController, UITabBarDelegate
         super.viewDidLoad()
         
         let container = MSTransitionContainerViewController()
+        container.beginAppearanceTransition(true, animated: false)
         container.willMove(toParent: self)
         addChild(container)
         view.addSubview(container.view)
@@ -27,6 +28,7 @@ class FlowController : UIViewController, UITabBarDelegate
         container.view.frame = view.bounds
         self.container = container
         container.didMove(toParent: self)
+        container.endAppearanceTransition()
         
         let tabBar = UITabBar()
         tabBar.delegate = self
@@ -60,12 +62,12 @@ class FlowController : UIViewController, UITabBarDelegate
     
     func swiftUITab()
     {
-        container.setViewControllers([MSTDemoHostingController(rootView: First(flowController: self))], animated: false)
+        container.setViewControllers([UIHostingController(rootView: First(flowController: self))], animated: false)
     }
     
     func goToSecondSwiftUIPage()
     {
-        container.present(MSTDemoHostingController(rootView: Second(flowController: self)))
+        container.present(child: UIHostingController(rootView: Second(flowController: self)))
     }
     
     func tabBar(_ tabBar: UITabBar, didSelect item: UITabBarItem) {
@@ -76,14 +78,5 @@ class FlowController : UIViewController, UITabBarDelegate
         } else {
             swiftUITab()
         }
-    }
-}
-
-private class MSTDemoHostingController<T : View> : UIHostingController<T>
-{
-    override func viewDidAppear(_ animated: Bool)
-    {
-        super.viewDidAppear(animated)
-        print("\(String(describing: T.self)) appeared!")
     }
 }
