@@ -120,21 +120,28 @@ public class MSTransitionContainerViewController : UIViewController, UINavigatio
     /**
      Dismisses a provided view controller
      
-     Dismissal follows the following rules:
-     1. If no view controller is provided, the container will dismiss the currently-visible (top) view controller
-         * If `animated` is false, the animations are skipped
-     
-     2. If a view controller is provided, the container animates the transition between the top view controller and the view controller in the stack underneath the provided view controller
+     The container animates the transition between the top view controller and the view controller in the stack underneath the provided view controller
          * If `animated` is false, the animations are skipped
      
      - Parameter child: An optionally provided view controller to dismiss
-     - Parameter animated: Whether or not the transition shows an animation
+     - Parameter flag: Whether or not the transition shows an animation
      */
     public func dismiss(child viewController: UIViewController, animated flag: Bool = true)
     {
         guard let index = containerNavigationController.viewControllers.firstIndex(of: viewController) else { return }
         let viewController = containerNavigationController.viewControllers[max(index - 1, 0)]
         containerNavigationController.popToViewController(viewController, animated: flag)
+        setNeedsUpdateOfScreenEdgesDeferringSystemGestures()
+    }
+    
+    /**
+     Dismisses the currently presented view controller
+     
+     - Parameter flag: Whether or not the transition shows an animation
+     */
+    public func dismiss(animated flag: Bool = true)
+    {
+        containerNavigationController.popViewController(animated: flag)
         setNeedsUpdateOfScreenEdgesDeferringSystemGestures()
     }
     
